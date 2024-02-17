@@ -1,36 +1,63 @@
 <template>
-    <div class="create-info-containter">
-      <h1>Create a new Listing</h1>
-      <div class="image-upload-container">
-        <input type="file" name="myInput" accept="image/*, .pdf" required>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Post a Listing</title>
+        <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+      <div id="app">
+      <div class="row">
+        <div class="col-md-12">
+        <form @submit.prevent="getFormValues" name="listing-info">
+            <h1> Post a Listing </h1>
+            
+            <fieldset>
+            
+            <label for="itemTitle">Title</label>
+            <input v-model="userTitle" type="text" id="itemTitle" name="item_title">
+            
+            <label for="itemDescription">Description</label>
+            <input v-model="userDesc" type="text" id="itemDescription" name="item_description">
+
+            <label for="currency-field">Price</label>
+            <input v-model="userPrice" type="text" name="currency-field" id="currency-field" value="" data-type="currency" placeholder="$0">
+            
+            </fieldset>
+        
+            <button @click="handleInput">Post</button>
+            
+            <b>{{ changed }}</b>
+        </form>
+        </div>
+        </div>
       </div>
-      <div class="listing-info-container">
-        <div class="title-containter">
-          <label for="itemTitle" id="titleLabel">Title</label>
-          <input type="text" name="itemTitle" required>
-        </div>
-        <div class="description-containter">
-          <label for="itemDescription" id="descriptionLabel">Description</label>
-          <input type="text" name="itemDescription" required>
-        </div>
-        <div class="price-containter">
-          <label for="itemPrice" id="priceLabel">Price</label>
-          <input type="text" name="itemPrice" required>
-        </div>
-        <div class="contact-containter">
-          <label for="itemContact" id="contactLabel">Contact Info</label>
-          <input type="text" name="itemContact" required>
-        </div>
-        <div>
-          <button type="submit">Post Listing</button>
-        </div>
-      </div>
-    </div>
-  </template>
+    </body>
   
+  </template>
+  <script>
+  export default {
+  data() {
+    return {
+      title: '',
+      description: '',
+      price: '',
+      changed: 'this guy',
+    };
+  },
+  methods: {
+    handleInput(event) {
+      this.title = this.userTitle;
+      this.description = this.userDesc;
+      this.price = this.userPrice;
+      this.changed = this.title;
+    },
+  },
+};
+  </script>
   <style>
   @media (min-width: 1024px) {
-    .about {
+    .create {
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -50,7 +77,6 @@ form {
   max-width: 300px;
   margin: 10px auto;
   padding: 10px 20px;
-  background: #f4f7f8;
   border-radius: 8px;
 }
 
@@ -74,6 +100,11 @@ select {
   color: #8a97a0;
   box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
   margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
 }
 
 select {
