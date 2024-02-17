@@ -1,7 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, ref } from "vue";
-import LandingPage from './components/LandingPage.vue';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from './router';
 
