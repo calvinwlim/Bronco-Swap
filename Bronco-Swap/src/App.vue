@@ -1,19 +1,44 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import { onMounted, ref } from "vue";
+import LandingPage from './components/LandingPage.vue';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import router from './router';
+
+const isLoggedIn = ref(false);
+
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user)
+      isLoggedIn.value = true;
+    else 
+      isLoggedIn.value = false;
+  });
+}) 
+
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    router.push("/");
+  });
+}
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <LandingPage/>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/create">Create</RouterLink>
+
+        <RouterLink to="/login" v-if="!isLoggedIn">Login</RouterLink>
+        <RouterLink to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
+
       </nav>
     </div>
   </header>
