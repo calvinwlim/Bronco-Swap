@@ -1,7 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, ref } from "vue";
-import LandingPage from './components/LandingPage.vue';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from './router';
 
@@ -29,16 +28,6 @@ const handleSignOut = () => {
 <template>
   <header>
     <div class="wrapper">
-      <LandingPage/>
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/create">Create Listing</RouterLink>
-        <RouterLink to="/login" v-if="!isLoggedIn">Login</RouterLink>
-        <RouterLink to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
-        <RouterLink to="/create">Create</RouterLink>
-      </nav>
     </div>
   </header>
 
