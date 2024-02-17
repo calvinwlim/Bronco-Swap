@@ -20,7 +20,7 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
       .then((result) => {
           console.log("success!");
-          router.push("/home");
+          router.push("/");
       })
       .catch((error) => {
           router.push("/error");
