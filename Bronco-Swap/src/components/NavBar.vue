@@ -6,6 +6,7 @@
         >Create a Listing</RouterLink
       >
       <RouterLink class="link" to="/chat">Chat</RouterLink>
+      <RouterLink class="link" to="/browse" @click="browseTab">Browse</RouterLink>
     </div>
     <div class="search-container">
       <input
@@ -61,13 +62,14 @@ onMounted(() => {
 let searchProducts = async () => {
   const searchTerm = searchInput.value.trim()
   if (searchTerm !== '') {
-    localStorage.setItem('lastSearch', searchTerm)
-    const searchResults = []
-    const querySnapshot = await getDocs(query(listingsCollection, where('title', '==', searchTerm)))
+    localStorage.setItem('lastSearch', searchTerm);
+    const searchResults = [];
+    let querySnapshot = await getDocs(query(listingsCollection));
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data())
-      searchResults.push(doc.data())
-    })
+      console.log(doc.id, ' => ', doc.data());
+      if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()))
+        searchResults.push(doc.data());
+    });
     if (searchResults.length > 0) {
       localStorage.setItem('searchResults', JSON.stringify(searchResults)) // Store search results in local storage
       // Redirect to /browse and pass searchResults as a route parameter
@@ -91,6 +93,26 @@ const handleSignOut = () => {
     window.location.reload()
   })
 }
+
+const browseTab = async () => {
+  localStorage.setItem('lastSearch', "");
+  let uid = JSON.parse(localStorage.getItem("user")).uid;
+  if (!uid) {
+    uid = "@#$%";
+  }
+  console.log(uid);
+  const searchResults = [];
+  const querySnapshot = await getDocs(query(listingsCollection, where('uid', '!=', uid)));
+  querySnapshot.forEach((doc) => {
+      searchResults.push(doc.data());
+    });
+    console.log("before browse")
+  console.log(searchResults)
+  localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
+  await router.push('/browse');
+  window.location.reload();
+};
+
 </script>
 
 <style lang="scss" scoped>
