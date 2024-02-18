@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "firebase": "^10.8.0",
+    "mdb-vue-ui-kit": "^4.1.1",
     "pinia": "^2.1.7",
     "sass": "^1.71.0",
     "vue": "^3.4.15",
