@@ -1,7 +1,12 @@
 <template>
     <v-for  v-for="item in products">
         <Listing
-            
+            image={{item.image}}
+            :itemTitle="item.title"
+            :price="item.price"
+            postedBy="PlaceHolder"
+            contactInfo="PlaceHolder"
+
         ></Listing>
     </v-for>
 </template>
