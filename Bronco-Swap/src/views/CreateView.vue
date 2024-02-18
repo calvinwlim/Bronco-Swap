@@ -177,8 +177,9 @@ export default {
 }
 
 h1 {
+  color: rgb(50, 50, 50);
   font-size: 4rem;
-  font-weight: 800;
+  font-weight: 500;
   margin-bottom: 2rem;
 }
 label {

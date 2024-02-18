@@ -19,6 +19,7 @@
     </div>
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
     <div class="dropdown" v-if="isLoggedIn" @click="toggleDropdown">
+      <img class="pfp" src="../assets/pfp4.png" />
       <span class="profile-link"
         >Profile
         <img v-if="!isDropdownVisible" class="arrow" src="../assets/icons-arrow-down.png" />
@@ -186,6 +187,11 @@ const browseTab = async () => {
   width: 16px;
   top: -2px;
   color: #f9f9f9;
+}
+
+.pfp {
+  width: 55px;
+  padding: 5px;
 }
 
 .profile-link {

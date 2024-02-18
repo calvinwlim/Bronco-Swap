@@ -18,8 +18,7 @@
             Swap empowers users to make eco-conscious decisions, reducing waste and fostering a
             culture of reuse and resourcefulness on campus. Join us in our mission to create a
             greener future, one swap at a time, with Bronco Swap.
-          </p> <br />
-      <br />
+          </p> 
           <button class="browse-button" @click="goToMarketplace">Browse</button>
         </article>
         <div class="next-generation-phones">
@@ -87,7 +86,7 @@ html,body { height:100%; }
 .next-generation-section {
   display: flex;
   overflow: hidden;
-  color: #000000;
+  color: rgb(50, 50, 50);
 }
 
 .next-generation-article {
