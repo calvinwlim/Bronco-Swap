@@ -7,19 +7,19 @@
   <div class="content">
     <div class="sidebar">
       <label class="checkbox">
-        <input type="checkbox" v-model="textbook" @click="updateItems"> Textbooks
+        <input type="checkbox" v-model="textbook" @input="updateItems()"> Textbooks
       </label>
 
       <label class="checkbox">
-        <input type="checkbox" v-model="clothing" @click="updateItems"> Clothing
+        <input type="checkbox" v-model="clothing" @input="updateItems()"> Clothing
       </label>
 
       <label class="checkbox">
-        <input type="checkbox" v-model="furniture" @click="updateItems"> Furniture
+        <input type="checkbox" v-model="furniture" @input="updateItems()"> Furniture
       </label>
 
       <label class="checkbox">
-        <input type="checkbox" v-model="other" @click="updateItems"> Other
+        <input type="checkbox" v-model="other" @input="updateItems()"> Other
       </label>
     </div>
     <div class="browse">
@@ -74,6 +74,12 @@ export default {
       searchText: localStorage.getItem("searchText")
     };
   },
+  watch: {
+    textbook: 'updateItems',
+    clothing: 'updateItems',
+    furniture: 'updateItems',
+    other: 'updateItems',
+  },
   methods: {
     toggleModal(item) {
       if (item) {
@@ -81,20 +87,32 @@ export default {
       }
       this.modalActive = !this.modalActive;
     },
-    updateItems() {
-      let storedSearchResults = localStorage.getItem('searchResults') || [];
+    updateItems(type, bool) {
+      console.log('textbook:', this.textbook);
+      console.log('clothing:', this.clothing);
+      console.log('furniture:', this.furniture);
+      console.log('other:', this.other);
+      let storedSearchResults = JSON.parse(localStorage.getItem('searchResults')) || [];
       let types = []
-      if (this.textbook)
-        types.push("textbook")
-      if (this.clothing)
-        types.push("clothing")
-      if (this.furniture)
-        types.push("furniture")
-      if (this.other)
-        types.push("other")
+      this.$nextTick(() => {
+        if (this.textbook)
+          types.push("textbook")
+        if (this.clothing)
+          types.push("clothing")
+        if (this.furniture)
+          types.push("furniture")
+        if (this.other)
+          types.push("other")
 
-      storedSearchResults = storedSearchResults.filter(item => types.includes(item.type));
-      this.searchResults = storedSearchResults;
+          console.log(types.length)
+        if (types.length == 0) {
+          console.log(storedSearchResults)
+          this.searchResults = storedSearchResults;
+        } else {
+          storedSearchResults = storedSearchResults.filter(item => types.includes(item.type));
+          this.searchResults = storedSearchResults;
+        }
+      });
     }
   }
 }
@@ -129,6 +147,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+
 .galleryitems .item {
   flex-basis: 20%;
   padding: 0 15px;
