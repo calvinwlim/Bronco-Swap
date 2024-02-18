@@ -36,6 +36,7 @@ export default {
               this.user = result.user;
               localStorage.setItem('user', JSON.stringify(this.user))
               this.$router.push("/");
+              window.location.reload();
           })
           .catch((error) => {
               console.error(error);
