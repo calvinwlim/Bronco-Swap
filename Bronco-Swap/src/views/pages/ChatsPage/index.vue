@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100vh">
+    <div style="height: 90vh">
       <PrettyChatWindow
         :projectId="projectId"
         :username="username"

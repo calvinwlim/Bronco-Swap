@@ -1,5 +1,6 @@
 <template>
   <Modal @close="toggleModal(null)" :modalActive="modalActive" :passProduct="passProduct">
+
     <div class="modal-content">
     </div>
   </Modal>
@@ -37,6 +38,7 @@
             <img :src="item.image" alt="" />
           </div>
         </div>
+        <img :src="item.image" alt="" />
       </div>
       <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
     </div>
@@ -92,6 +94,9 @@ export default {
 
       storedSearchResults = storedSearchResults.filter(item => types.includes(item.type));
       this.searchResults = storedSearchResults;
+        this.passProduct = item
+      }
+      this.modalActive = !this.modalActive
     }
   }
 }
@@ -126,7 +131,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-
 .galleryitems .item {
   flex-basis: 20%;
   padding: 0 15px;

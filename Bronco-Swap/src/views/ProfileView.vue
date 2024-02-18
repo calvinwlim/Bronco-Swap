@@ -94,7 +94,9 @@ export default {
         title: 'title',
         description: 'Description',
         price: 'price',
-        image: 'url'
+        image: 'url',
+        email: 'email',
+        displayName: 'displayName'
       },
       modalActive: false
     }
@@ -122,7 +124,9 @@ export default {
             title: doc.data().title,
             description: doc.data().description,
             price: doc.data().price,
-            image: doc.data().image
+            image: doc.data().image,
+            email: doc.data().email,
+            displayName: doc.data().displayName
           })
         }
       })
