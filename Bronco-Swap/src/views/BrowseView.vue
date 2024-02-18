@@ -1,5 +1,6 @@
 <template>
   <Modal @close="toggleModal(null)" :modalActive="modalActive" :passProduct="passProduct">
+<<<<<<< HEAD
 
     <div class="modal-content">
     </div>
@@ -36,14 +37,29 @@
               </div>
             </div>
             <img :src="item.image" alt="" />
+=======
+    <div class="modal-content"></div>
+  </Modal>
+  <h1 class="searchHeader" v-if="searchResults">Search Results for "{{ this.searchTerm }}"</h1>
+  <div v-if="searchResults" class="galleryitems">
+    <div v-for="item in searchResults" class="item">
+      <div class="itemcontent">
+        <div class="overlay">
+          <a @click="toggleModal(item)" class="zoomlink"><i class="fa-solid fa-plus"></i></a>
+          <div class="text">
+            <h3>{{ item.title }}</h3>
+            <a href="#" class="livelink"
+              >{{ item.price }} <i class="fa-solid fa-angle-right"></i
+            ></a>
+>>>>>>> parent of 43573ba (p)
           </div>
-          <img :src="item.image" alt="" />
         </div>
+        <img :src="item.image" alt="" />
       </div>
       <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
     </div>
-    <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
   </div>
+  <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
 </template>
 
 <script>
