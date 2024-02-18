@@ -44,7 +44,7 @@ export default {
   components: {},
   methods: {
     goToMarketplace() {
-      this.$router.push('/marketplace')
+      this.$router.push('/browse')
     }
   }
 }

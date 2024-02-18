@@ -199,6 +199,7 @@ const browseTab = async () => {
 .search-container {
   display: flex;
   align-items: center;
+  width: 40%;
 }
 
 .search-input {
