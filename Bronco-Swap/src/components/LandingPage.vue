@@ -32,6 +32,8 @@
       <br />
       <br />
       <br />
+      <br />
+      <br />
      
     </main>
   </div>
@@ -57,7 +59,7 @@ html,body { height:100%; }
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(300deg, #A5CC6b, #646e78, #862633) repeat-y;
+  background: #f8f3ec;
   background-size: 100vw 100vh;
   background-repeat:repeat;
   background-attachment: scroll;
@@ -85,7 +87,7 @@ html,body { height:100%; }
 .next-generation-section {
   display: flex;
   overflow: hidden;
-  color: #F8f4f9;
+  color: #000000;
 }
 
 .next-generation-article {
@@ -115,7 +117,7 @@ h1 {
 }
 
 .browse-button {
-  background-color: #A5CC6b; /* Blue color */
+  background-color: #862633; /* Blue color */
   color: #F8f4f9; /* Text color */
   border: none; /* Remove border */
   border-radius: 20px; /* Rounded corners */
@@ -129,7 +131,7 @@ h1 {
 }
 
 .browse-button:hover {
-  background-color: #8cad5b; /* Darker blue on hover */
+  background-color: #6c1b26; /* Darker blue on hover */
 }
 
 </style>
