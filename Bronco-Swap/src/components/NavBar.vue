@@ -21,8 +21,8 @@
     <div class="dropdown" v-if="isLoggedIn" @click="toggleDropdown">
       <span class="profile-link"
         >Profile
-        <img v-if="!isDropdownVisible" class="arrow" src="../assets/icons8-sort-down-30.png" />
-        <img v-if="isDropdownVisible" class="arrow" src="../assets/icons8-sort-up-30.png" />
+        <img v-if="!isDropdownVisible" class="arrow" src="../assets/icons-arrow-down.png" />
+        <img v-if="isDropdownVisible" class="arrow" src="../assets/icons-arrow-up.png" />
       </span>
       <div class="dropdown-content" v-show="isDropdownVisible">
         <RouterLink class="link" to="/profile">View Profile</RouterLink>
@@ -137,8 +137,12 @@ const browseTab = async () => {
   text-decoration-color: #f9f9f9;
 }
 
+.link {
+  color: #f9f9f9;
+}
+
 .link:hover {
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid #f9f9f9;
 }
 
 .search {
@@ -147,36 +151,24 @@ const browseTab = async () => {
   justify-content: space-evenly;
 }
 
-.searchbar {
-  border: 2px lightgray;
-  background-color: rgb(243, 237, 237);
+.search-input {
+  border: 2px #f9f9f9;
+  background-color: transparent;
   height: 30%;
   border-radius: 4%;
+  color: #f9f9f9;
 }
-
-.searchButton {
-  width: 5rem;
-  font-size: small;
-  text-align: center;
-  border-radius: 5%;
-  border: none;
-}
-
-.searchButton:hover {
-  background-color: rgb(118, 117, 117);
-  color: white;
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
   align-items: center;
   z-index: 999;
+  color: #f9f9f9;
 }
 
 .dropdown-content {
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: #A5CC6b;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -190,6 +182,7 @@ const browseTab = async () => {
 .arrow {
   width: 16px;
   top: -2px;
+  color: #f9f9f9;
 }
 
 .profile-link {
@@ -205,7 +198,7 @@ const browseTab = async () => {
 .search-input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ced4da;
+  border: 1px solid #f9f9f9;
   border-radius: 6px 0 0 6px;
   font-size: 16px;
   outline: none;
@@ -213,16 +206,18 @@ const browseTab = async () => {
 
 .search-button {
   padding: 12px 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #A5CC6b;
+  color: #f9f9f9;
   border: none;
   border-radius: 0 6px 6px 0;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 2px #f9f9f9;
+
 }
 
 .search-button:hover {
-  background-color: #0056b3;
+  background-color: #8aab59;
 }
 
 .profile-link:hover {
