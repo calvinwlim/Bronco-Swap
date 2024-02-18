@@ -73,17 +73,6 @@ import Modal from '../components/ModalPopUp.vue'
 import { ref } from 'vue'
 import { onAuthStateChanged, getAuth } from 'firebase/auth'
 import { collection, query, getFirestore, onSnapshot } from 'firebase/firestore'
-
-import Modal from '../components/ModalPopUp.vue';
-import {
-    collection,
-    query,
-    getFirestore,
-    onSnapshot,
-    updateDoc,
-    doc,
-    deleteDoc,
-} from "firebase/firestore";
 import {
     getStorage
 } from "firebase/storage";
@@ -133,29 +122,6 @@ export default {
         });
     },
    
-
-    methods: {
-    toggleModal(item){
-        if(item){
-            this.passProduct = item;
-
-        }
-      })
-    })
-  },
-  //     setup() {
-  //     const modalActive = ref(false);
-
-  //     const toggleModal = (item) => {
-  //         if (item) {
-  //             console.log(item.title);
-  //             passProduct = item;
-  //         }
-  //       modalActive.value = !modalActive.value;
-  //     };
-
-  //     return { modalActive };
-  //   },
   methods: {
     toggleModal(item) {
       if (item) {
