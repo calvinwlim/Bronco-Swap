@@ -135,7 +135,7 @@ export default {
   align-items: center;
   width: 20%;
   height: 100%;
-  min-height: 41rem;
+  min-height: 89.7vh;
   border-right: 4px solid rgb(55,55,55);
 }
 
