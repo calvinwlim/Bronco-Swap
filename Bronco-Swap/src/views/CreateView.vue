@@ -9,7 +9,7 @@
             <fieldset>
               <div class="form-group">
                 <label for="fileInput">Upload Image</label>
-                <input id="fileInput" class="form-control" lang="en" type="file" accept=".jpg,.png" @change="updateImageEvent" required />
+                <input id="fileInput" class="form-control" lang="en" type="file" accept=".jpg,.png, .jpeg" @change="updateImageEvent" required />
               </div>
 
               <div class="form-group">
