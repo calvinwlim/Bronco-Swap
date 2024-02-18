@@ -3,7 +3,7 @@
       <div class="modal-content">
       </div>
   </Modal> 
-  <h1 v-if="searchResults" class="headingDisplay">Search Results for ""</h1>
+  <h1 class="searchHeader" v-if="searchResults">Search Results for "{{ this.searchTerm }}"</h1>
     <div v-if="searchResults" class="galleryitems">
      
       <div v-for="item in searchResults" class="item">
@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <h1 v-if="!searchResults" class="noResult">No results found. Sorry!</h1>
+    <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
 </template>
 
 <script setup>
@@ -57,6 +57,7 @@ export default {
                 image: "url",
             },
             modalActive: false,
+            searchTerm: localStorage.getItem("lastSearch")
         };
     },
   methods: {
@@ -72,13 +73,6 @@ export default {
 
 <style scoped>
 /* Add CSS styles to standardize the size of the photos and product listings */
-
-.headingDisplay {
-  text-align: center;
-  font-size: 30px;
-  font-family: 'Times New Roman', Times, serif;
-  margin: 30px 0;
-}
 .galleryitems{
   margin:30px 30px;
   display: flex;
@@ -152,8 +146,11 @@ export default {
   object-position:center;
 }
 
-.noResult {
+.searchHeader {
   padding-top: 1rem;
   text-align: center;
+  font-size: 30px;
+  font-family: 'Times New Roman', Times, serif;
+  margin: 30px 0;
 }
 </style>

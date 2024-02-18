@@ -196,7 +196,7 @@ const handleSignOut = () => {
   }
 
   .profile-link:hover {
-    background-color: #f0f0f0;
+    border-bottom: 2px solid blue;
   }
   
 </style>
