@@ -4,9 +4,7 @@
       <RouterLink class="link" to="/">Home</RouterLink>
       <RouterLink class="link" :to="(!isLoggedIn) ? '/login' : '/create'">Create a Listing</RouterLink>
       <RouterLink class="link" to="/chat">Chat</RouterLink>
-      <RouterLink class="link" to="/profile">View Profile</RouterLink>
       <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
-      <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
     </div>
     <div class="search">
       <input class="searchbar" type="text" v-model="searchInput" placeholder="Search for items..." />
@@ -17,7 +15,7 @@
         <span class="profile-link">Profile</span>
         <div class="dropdown-content">
           <RouterLink class="link" to="/profile">View Profile</RouterLink>
-          <RouterLink  class="link" @click="handleSignOut" to="/">Logout</RouterLink>
+          <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
         </div>
       </div>
   </div>
@@ -106,6 +104,7 @@ const handleSignOut = () => {
   justify-content: space-evenly;
 }
 .searchbar {
+  border: 1px lightgray;
   height: 20%;
 }
 
@@ -159,7 +158,7 @@ const handleSignOut = () => {
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 99;
     top: 100%; // Adjust the top position
   right: 0; // Align with the right edge of the parent
   }
