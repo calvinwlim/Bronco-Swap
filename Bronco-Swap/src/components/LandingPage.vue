@@ -1,5 +1,5 @@
 <template>
-  <div class="gradient-background">
+  <div id="app" class="gradient-background">
     <main class="padding-content">
       <section class="next-generation-section">
         <article class="next-generation-article">
@@ -23,6 +23,9 @@
           <img src="../assets/images/image-mockups.png" class="next-generation-image" />
         </div>
       </section>
+      <br />
+      <br />
+      <br />
     </main>
   </div>
 </template>
@@ -41,6 +44,11 @@ export default {
 
 <style scoped>
 .gradient-background {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(300deg, white, #f6f1f1, #afd3e2);
   background-size: 180% 180%;
   animation: gradient-animation 24s ease infinite;
