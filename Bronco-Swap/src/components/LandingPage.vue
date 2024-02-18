@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="gradient-background">
     <main class="padding-content">
       <section class="next-generation-section">
         <article class="next-generation-article">
@@ -38,6 +38,25 @@ export default {
 </script>
 
 <style scoped>
+
+.gradient-background {
+  background: linear-gradient(300deg,white,#f6f1f1,#afd3e2);
+  background-size: 180% 180%;
+  animation: gradient-animation 24s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .padding-content {
   padding-left: 8rem;
   font-weight: 500;
