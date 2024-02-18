@@ -61,6 +61,9 @@ let searchProducts = async () => {
       await router.push('/browse');
       window.location.reload();
     } else {
+      localStorage.setItem('searchResults', null);
+      await router.push('/browse');
+      window.location.reload();
       console.log('No search results found');
     }
   } else {
