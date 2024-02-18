@@ -200,13 +200,14 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 .branding h1 {
   text-align: center;
   font-size: 20px;
   text-transform: uppercase;
   color: rgb(34, 34, 34);
-  margin: 0 0 20px 0;
+  margin: 0 0 50px 0;
 }
 .branding img.avatar {
   float: left;
@@ -216,7 +217,7 @@ header {
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
-  margin: 0 0 25px 0;
+  margin: 0 15px 50px 25px;
 }
 .branding h2 {
   text-align: center;
@@ -343,7 +344,7 @@ header {
   width: auto;
   height: auto;
   padding: 5px 10px;
-  background: rgb(252, 20, 20);
+  background: #862633;
   color: #fff;
   border-radius: 30px;
   font-size: 10px;

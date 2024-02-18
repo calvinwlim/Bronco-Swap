@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="gradient-background">
     <main class="padding-content">
+      <img src="../assets/second-hand.png">
       <section class="next-generation-section">
         <article class="next-generation-article">
           <h1 class="title">
@@ -22,9 +23,6 @@
       <br />
           <button class="browse-button" @click="goToMarketplace">Browse</button>
         </article>
-        <div class="next-generation-phones">
-          <img src="../assets/images/image-mockups.png" class="next-generation-image" />
-        </div>
       </section>
       <br />
       <br />
@@ -83,10 +81,17 @@ html,body { height:100%; }
   font-weight: 500;
 }
 
+img {
+  float: right;
+  max-width: 350px;
+  min-width: 200px;
+  margin-right: 10%;
+  margin-top: 100px;
+}
+
 /* next-generation */
 .next-generation-section {
-  display: flex;
-  overflow: hidden;
+
   color: #000000;
 }
 
@@ -100,20 +105,11 @@ html,body { height:100%; }
 h1 {
   font-size: 4rem;
   font-weight: 900;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 }
 
 .next-generation-text {
   margin-bottom: 2rem;
-}
-
-.next-generation-phones {
-  width: 65%;
-  background-image: url(../assets/images/bg-intro-desktop.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-top: -8rem;
-  padding-left: 14rem;
 }
 
 .browse-button {
