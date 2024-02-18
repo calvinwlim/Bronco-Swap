@@ -84,9 +84,7 @@
   
 <script>
 import Modal from '../components/ModalPopUp.vue';
-import { ref } from "vue";
 import {
-    addDoc,
     collection,
     query,
     getFirestore,
@@ -98,6 +96,8 @@ import {
 import {
     getStorage
 } from "firebase/storage";
+import "firebase/database";
+
 
 let googleuser = JSON.parse(localStorage.getItem("user"));
 const storage = getStorage();
@@ -119,6 +119,8 @@ export default {
                 description: "Description",
                 price: "price",
                 image: "url",
+                email: "email",
+                displayName: "name"
             },
             modalActive: false,
         };
@@ -134,6 +136,8 @@ export default {
                         description: doc.data().description,
                         price: doc.data().price,
                         image: doc.data().image,
+                        email: doc.data().email,
+                        displayName: doc.data().displayName
                     });
                 }
             });
