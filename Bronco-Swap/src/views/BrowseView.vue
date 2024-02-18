@@ -213,7 +213,7 @@ export default {
   width: auto;
   height: auto;
   padding: 5px 10px;
-  background: rgb(252, 20, 20);
+  background: #862633;
   color: #fff;
   border-radius: 30px;
   font-size: 10px;
