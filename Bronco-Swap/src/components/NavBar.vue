@@ -121,17 +121,20 @@ const browseTab = async () => {
   z-index: 998;
   width: 100%;
   margin: auto;
-  padding: 35px 25px 35px 0;
+  padding: 15px 35px 35px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  height: 80px;
+  background: linear-gradient(300deg, #A5CC6b, #646e78, #862633) repeat-y;
 }
-
 .links {
   width: 30%;
   display: flex;
   justify-content: space-evenly;
+  color: #f9f9f9;
+  text-decoration-color: #f9f9f9;
 }
 
 .link:hover {
