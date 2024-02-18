@@ -1,11 +1,13 @@
 <script setup>
 import AuthPage from "./pages/AuthPage/index.vue";
 import ChatsPage from "./pages/ChatsPage/index.vue";
+import { loginRest, signupRest } from "./pages/AuthPage/api";
 </script>
 
 <template>
   <!-- scrapped auth page, direct to google auth -->
-  <AuthPage v-if="!googleuser" @onAuth="handleAuth" />
+  <!-- <AuthPage v-if="!googleuser" @onAuth="handleAuth" /> -->
+  <div v-if="!googleuser">You must be logged in!</div>
   <ChatsPage
     v-else
     v-bind:username="googleuser.email"
@@ -19,7 +21,28 @@ import ChatsPage from "./pages/ChatsPage/index.vue";
 </template>
 
 <script>
+// onMounted(() => {
+//   console.log("Component mounted");
+
+//   // Example: Reload the page once when the component is mounted
+//   window.location.reload();
+// });
+
 let googleuser = JSON.parse(localStorage.getItem("user"));
+
+// checks if user not in database, signs them up
+if (googleuser) {
+  loginRest(googleuser.email, '1234')
+      .catch((error) => {
+        console.log("Login error", error);
+        signupRest(
+          googleuser.email, // username
+          '1234' //pass
+        )
+        .catch((error) => console.log("Sign up error", error));
+      }
+      );
+}
 
 export default {
   data() {
