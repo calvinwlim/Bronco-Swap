@@ -69,7 +69,6 @@
   
 <script>
 import Modal from '../components/ModalPopUp.vue'
-import { ref } from 'vue'
 import { onAuthStateChanged, getAuth } from 'firebase/auth'
 import { collection, query, getFirestore, onSnapshot } from 'firebase/firestore'
 

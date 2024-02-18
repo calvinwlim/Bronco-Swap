@@ -4,8 +4,6 @@ import 'mdb-vue-ui-kit/css/mdb.min.css';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
 
 import App from './App.vue'
 import router from './router'
