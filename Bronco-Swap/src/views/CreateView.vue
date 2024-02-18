@@ -107,31 +107,38 @@ export default {
         description: '',
         uid: JSON.parse(localStorage.getItem('user')).uid,
         displayName: JSON.parse(localStorage.getItem('user')).displayName,
+        type: "",
         email: JSON.parse(localStorage.getItem('user')).email
       },
       userTitle: '',
       selectedCategory: '',
       userDesc: '',
       userPrice: '',
+      userType: "",
       isPriceValid: true
     }
   },
 
   methods: {
     async handleInput(event) {
-      this.product.title = this.userTitle
-      this.product.description = this.userDesc
-      this.product.price = this.userPrice
-      await this.previewImage()
-      addDoc(q, this.product).then(() => {
-        this.product.title = ''
-        this.product.price = ''
-        this.product.image = ''
-        this.product.description = ''
-        this.userTitle = ''
-        this.userDesc = ''
-        this.userPrice = ''
-        const fileInput = document.getElementById('fileInput') // Replace 'fileInput' with the actual ID of your file input
+      this.product.title = this.userTitle;
+      this.product.description = this.userDesc;
+      this.product.price = this.userPrice;
+      this.product.type = this.userType;
+      await this.previewImage();
+      addDoc(
+        q,
+        this.product
+      ).then(() => {
+        this.product.title = "";
+        this.product.price = "";
+        this.product.image = "";
+        this.product.description = "";
+        this.userTitle = "";
+        this.userDesc = "";
+        this.userPrice = "";
+        const fileInput = document.getElementById('fileInput'); // Replace 'fileInput' with the actual ID of your file input
+
         if (fileInput) {
           fileInput.value = ''
         }
