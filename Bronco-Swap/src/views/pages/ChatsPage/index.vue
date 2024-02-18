@@ -19,11 +19,13 @@
   <script>
   import { PrettyChatWindow } from "react-chat-engine-pretty";
   import { applyReactInVue } from "veaury";
+  import { VITE_CHAT_ENGINE_PROJECT_ID, VITE_CHAT_ENGINE_PRIVATE_KEY } from '../AuthPage/keys';
   
   export default {
     data() {
       return {
-        projectId: import.meta.env.VITE_CHAT_ENGINE_PROJECT_ID,
+        //projectId: import.meta.env.VITE_CHAT_ENGINE_PROJECT_ID,
+        projectId: VITE_CHAT_ENGINE_PROJECT_ID,
       };
     },
     components: {

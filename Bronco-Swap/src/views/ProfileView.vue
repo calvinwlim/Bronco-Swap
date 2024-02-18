@@ -124,6 +124,152 @@ export default {
             price: doc.data().price,
             image: doc.data().image
           })
+   <!DOCTYPE html>
+<html lang="en">
+
+
+	<head>
+
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>DesignFolio: Portfolio Website Template</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/simple-lightbox.css">
+		<link rel="stylesheet" href="fonts/fa/css/all.css">
+	</head>
+	<body>
+
+        <Modal @close="toggleModal(null)" :modalActive="modalActive" :passProduct="passProduct">
+      <div class="modal-content">
+      </div>
+    </Modal>
+
+		 <main>
+            
+			  <header>
+			      <div class="branding">
+			          <h1>My Listings</h1>
+			          <img src="" alt="" class="avatar" />
+			          <h2 id="userInfo"></h2>
+			          <p>
+			            I Create Beautiful Designs. <strong>My fee is affordable and I deliver fast</strong> (within timeframe). Try Me, Contact Below.
+			          </p>
+			        <ul>
+			          <li><i class="fa-solid fa-phone"></i> Call: <a href="tel:+11234567890">+1 1234567890</a></li>
+			          <li><i class="fa-solid fa-envelope"></i> Email: <a href="mailto:#">john@mailname.com</a></li>
+			          <li><i class="fa-brands fa-skype"></i> Skype: <a href="skype:username?chat">JOHNDOE123</a></li>
+			        </ul>
+			      </div>
+			      
+			  </header>
+			  <!-- HEADER -->
+
+			   
+			   
+			   
+			  <section class="portfoliogallery gallery">
+			    
+			    <div class="headings">
+			      <h2>My Portfolio</h2>
+			      <p>Designfolio is a Portfolio Website Template.</p>
+			    </div>
+			      
+			    
+			    <div class="galleryitems">
+                    <div v-for="item in products" class="item">
+            
+                        <div class="itemcontent">
+                            <div class="overlay">
+                                <a @click="toggleModal(item)" class="zoomlink"><i class="fa-solid fa-plus"></i></a>
+                                <div class="text">
+                                <h3>{{ item.title }}</h3>
+                                <a href="#" class="livelink">${{ item.price }}</a>
+                                </div>
+                            </div>
+                            <img :src="item.image" alt="" />
+                        </div>
+			      </div>
+			      <!--1-->
+			    </div>
+
+			    <!--galleryitems-->
+			    
+			</section>
+		
+			   
+			</main>
+
+	</body>
+</html>
+<!--HTML-->
+<!-- Template By: LayoutFlow, URL: https://layoutflow.com/  -->
+</template>
+  
+<script>
+import Modal from '../components/ModalPopUp.vue';
+import { ref } from "vue";
+import {
+    addDoc,
+    collection,
+    query,
+    getFirestore,
+    onSnapshot,
+    updateDoc,
+    doc,
+    deleteDoc,
+} from "firebase/firestore";
+import {
+    getStorage
+} from "firebase/storage";
+
+let googleuser = JSON.parse(localStorage.getItem("user"));
+const storage = getStorage();
+const db = getFirestore();
+const q = query(collection(db, "Listings"));
+
+export default {
+    components: {
+        Modal,
+    },
+    data() {
+        return {
+            products: [],
+            id: JSON.parse(localStorage.getItem('user')).uid,
+            isModalVisible: false,
+            passProduct: {
+                key: 111111111,
+                title: "title",
+                description: "Description",
+                price: "price",
+                image: "url",
+            },
+            modalActive: false,
+        };
+    },
+    created() {
+        onSnapshot(q, (querySnapshot) => {
+            this.products = [];
+            querySnapshot.forEach((doc) => {
+                if (doc.data().uid == this.id) {
+                    this.products.push({
+                        key: doc.id,
+                        title: doc.data().title,
+                        description: doc.data().description,
+                        price: doc.data().price,
+                        image: doc.data().image,
+                    });
+                }
+            });
+        });
+    },
+   
+
+    methods: {
+    toggleModal(item){
+        if(item){
+            this.passProduct = item;
         }
       })
     })
