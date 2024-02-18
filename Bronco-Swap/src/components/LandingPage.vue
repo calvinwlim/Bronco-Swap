@@ -11,8 +11,7 @@
           <p class="next-generation-text">
             Bronco Swap is more than just an online marketplace; it's a hub for sustainable living within university campuses. Our platform facilitates the exchange of goods while prioritizing sustainability, enabling students and faculty to trade, sell, and buy items with a minimal environmental footprint. From textbooks to furniture to clothing, Bronco Swap empowers users to make eco-conscious decisions, reducing waste and fostering a culture of reuse and resourcefulness on campus. Join us in our mission to create a greener future, one swap at a time, with Bronco Swap.
           </p>
-          <button class="browse-button">Browse</button>
-        </article>
+          <button class="browse-button" @click="goToMarketplace">Browse</button>        </article>
         <div class="next-generation-phones">
           <img
             src="../assets/images/image-mockups.png"
@@ -30,6 +29,11 @@ export default {
   name: "LandingPage",
   components: {
   },
+  methods: {
+    goToMarketplace() {
+      this.$router.push('/marketplace');
+    }
+  }
 };
 </script>
 
