@@ -137,6 +137,7 @@ export default {
   height: 100%;
   min-height: 89.7vh;
   border-right: 1px solid #ddd;
+  margin-top: 30px;
 }
 
 .checkbox {
