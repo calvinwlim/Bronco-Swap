@@ -1,6 +1,6 @@
 <template>
     <div class="tile">
-        <img src="../assets/test-image.jpeg" class="image"/>
+        <img :src="image" class="image"/>
         <h1 class="title">{{ itemTitle }}</h1>
         <h2 class="price-text">{{ price }}</h2>
         <p class="info-text">Posted By: {{ postedBy }}</p>

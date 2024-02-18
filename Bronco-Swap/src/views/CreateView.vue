@@ -80,12 +80,12 @@ export default {
   },
 
   methods: {
-    handleInput(event) {
-      this.previewImage();
+    async handleInput(event) {
       this.product.title = this.userTitle;
       this.product.description = this.userDesc;
       this.product.price = this.userPrice;
-
+      await this.previewImage();
+      console.log(this.product.image)
       addDoc(
         q,
         this.product
@@ -104,7 +104,7 @@ export default {
       this.imageEvent = event;
     },
 
-    previewImage() {
+    async previewImage() {
       this.ProgressShow = true;
       this.uploadValue = 0;
       this.picture = null;
@@ -112,28 +112,32 @@ export default {
       this.imageName = this.imageEvent.target.files[0].name;
       const storageRef = ref(storage, "images/" + this.imageName);
       const uploadTask = uploadBytesResumable(storageRef, this.imageData);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          this.uploadValue =
+      const snapshot = await uploadTask;
+      this.uploadValue =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
-        (error) => {
-          console.log(error.message);
-        },
 
-        () => {
+      // uploadTask.on(
+      //   "state_changed",
+      //   (snapshot) => {
+      //     // Observe state change events such as progress, pause, and resume
+      //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      //     this.uploadValue =
+      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //   },
+      //   (error) => {
+      //     console.log(error.message);
+      //   },
+
+        //  async () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          this.uploadValue = 100;
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-            this.product.image = downloadURL;
-          });
-        }
-      );
+        // this.uploadValue = 100;
+        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          this.product.image = downloadURL;
+        });
+        
+      // );
     },
   }
 };
