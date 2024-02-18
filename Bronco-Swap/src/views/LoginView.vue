@@ -28,18 +28,18 @@ export default {
   },
   methods: {
     signInWithGoogle() {
+      console.log("method")
+      let router = useRouter(); 
       const provider = new GoogleAuthProvider();
       signInWithPopup(getAuth(), provider)
         .then((result) => {
               this.user = result.user;
               localStorage.setItem('user', JSON.stringify(this.user))
-              console.log(user.email)
-              console.log(user.displayName)
-              console.log("success!");
+              this.$router.push("/");
           })
           .catch((error) => {
               console.error(error);
-              router.push("/error");
+             this.$router.push("/error");
           });
     }
   }
@@ -47,7 +47,6 @@ export default {
 
 // const email = ref("");
 // const password = ref("");
-const router = useRouter(); 
 
 let user = null;
 const signInWithGoogle = () => {
@@ -55,10 +54,7 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
           this.user = result.user;
-          console.log(user.email)
-          console.log(user.displayName)
-          console.log("success!");
-          // router.push("/");
+
       })
       .catch((error) => {
           router.push("/error");
