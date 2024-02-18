@@ -64,7 +64,7 @@
                 <label for="currency-field">Price</label>
                 <input
                   v-model="userPrice"
-                  class="textInput"
+                  class="form-control"
                   type="text"
                   name="currency-field"
                   id="currency-field"
@@ -171,7 +171,7 @@ export default {
 
 <style scoped>
 .create {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
 }

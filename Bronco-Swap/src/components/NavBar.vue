@@ -5,7 +5,7 @@
       <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/create'"
         >Create a Listing</RouterLink
       >
-      <RouterLink class="link" to="/chat">Chat</RouterLink>
+      <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>
       <RouterLink class="link" to="/browse" @click="browseTab">Browse</RouterLink>
     </div>
     <div class="search-container">
