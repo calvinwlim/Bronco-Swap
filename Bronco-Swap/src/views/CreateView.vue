@@ -1,68 +1,58 @@
 <template>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post a Listing</title>
-    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
-  </head>
-
-  <body>
-    <div id="app">
-      <div class="row">
-        <div class="col-md-12">
-          <form @submit.prevent="getFormValues" name="listing-info">
-            <h1> Post a Listing </h1>
+  <div id="app" class="create">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form @submit.prevent="handleInput" name="listing-info" class="listing-form">
+            <h1>Post a Listing</h1>
 
             <fieldset>
+              <div class="form-group">
+                <label for="fileInput">Upload Image</label>
+                <input id="fileInput" class="form-control" lang="en" type="file" accept=".jpg,.png" @change="updateImageEvent" required />
+              </div>
 
-              <input id="fileInput" class="form-control" lang="en" type="file" placeholder="sqs" accept=".jpg,.png"
-                @change="updateImageEvent" required />
+              <div class="form-group">
+                <label for="itemTitle">Title</label>
+                <input v-model="userTitle" class="form-control" type="text" id="itemTitle" name="item_title" required>
+              </div>
 
-              <label for="itemTitle">Title</label>
-              <input v-model="userTitle" class="textInput" type="text" id="itemTitle" name="item_title" required>
+              <div class="form-group">
+                <label for="category">Category</label>
+                <select v-model="selectedCategory" class="form-control" name="category" id="category" required>
+                  <option value="" disabled>Select category</option>
+                  <option value="textbook">Textbook</option>
+                  <option value="furniture">Furniture</option>
+                  <option value="clothing">Clothing</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
 
-              <select name="cars" id="cars" required=true>
-                <option value="textbook">Textbook</option>
-                <option value="furniture">Furniture</option>
-                <option value="clothing">Clothing</option>
-                <option value="other">Other</option>
-              </select>
+              <div class="form-group">
+                <label for="itemDescription">Description</label>
+                <textarea v-model="userDesc" class="form-control" id="itemDescription" name="item_description" required></textarea>
+              </div>
 
-              <label for="itemDescription">Description</label>
-              <input v-model="userDesc" class="textInput" type="text" id="itemDescription" name="item_description" required>
-
-              <label for="currency-field">Price</label>
-              <input v-model="userPrice" class="textInput" type="text" name="currency-field" id="currency-field" value=""
-                data-type="currency" placeholder="$0" required>
-
+              <div class="form-group">
+                <label for="currency-field">Price</label>
+                <input v-model="userPrice" class="textInput" type="text" name="currency-field" id="currency-field" value=""
+                       data-type="currency" placeholder="$0" required @input="validatePriceInput">
+                <p v-if="!isPriceValid" class="text-danger">Please enter a valid numeric value for the price.</p>
+              </div>
             </fieldset>
 
-            <input type="submit" @click="handleInput"/>
-
+            <button type="submit" class="btn btn-primary submit-button">Submit</button>
           </form>
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </template>
+
 <script>
 import router from "@/router";
-import {
-  addDoc,
-  collection,
-  query,
-  getFirestore,
-  onSnapshot,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { addDoc, collection, query, getFirestore} from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 const storage = getStorage();
 const db = getFirestore();
@@ -78,15 +68,11 @@ export default {
         description: "",
         uid: JSON.parse(localStorage.getItem('user')).uid
       },
-      ProgressShow: false,
-      uploadValue: 0,
-      picture: null,
-      imageData: null,
-      imageName: null,
-      imageEvent: null,
       userTitle: "",
+      selectedCategory: "",
       userDesc: "",
-      userPrice: ""
+      userPrice: "",
+      isPriceValid: true
     };
   },
 
@@ -121,121 +107,68 @@ export default {
     },
 
     async previewImage() {
-      this.ProgressShow = true;
-      this.uploadValue = 0;
-      this.picture = null;
-      this.imageData = this.imageEvent.target.files[0];
-      this.imageName = this.imageEvent.target.files[0].name;
-      const storageRef = ref(storage, "images/" + this.imageName);
-      const uploadTask = uploadBytesResumable(storageRef, this.imageData);
+      const imageData = this.imageEvent.target.files[0];
+      const imageName = imageData.name;
+      const storageRef = ref(storage, "images/" + imageName);
+      const uploadTask = uploadBytesResumable(storageRef, imageData);
       const snapshot = await uploadTask;
-      this.uploadValue =
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-      await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log("File available at", downloadURL);
-        this.product.image = downloadURL;
-      });
-
+      this.product.image = await getDownloadURL(snapshot.ref);
     },
+
+    validatePriceInput() {
+      // Regular expression to match numeric values
+      const numericRegex = /^[0-9]*$/;
+      this.isPriceValid = numericRegex.test(this.userPrice);
+    },
+
   }
 };
-
 </script>
+
 <style>
-@media (min-width: 1024px) {
-  .create {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+.create {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
 
-  *,
-  *:before,
-  *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.listing-form {
+  background-color: #f8f9fa;
+  padding: 50px;
+  border-radius: 8px;
+}
 
-  body {
-    color: #384047;
-  }
+.listing-form h1 {
+  margin-bottom: 30px;
+  text-align: center;
+}
 
-  form {
-    max-width: 300px;
-    margin: 10px auto;
-    padding: 10px 20px;
-    border-radius: 8px;
-  }
+.form-group {
+  margin-bottom: 20px;
+}
 
-  h1 {
-    margin: 0 0 30px 0;
-    text-align: center;
-  }
+.form-control {
+  border-radius: 5px;
+}
 
-  .textInput,
-  textarea,
-  select {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    font-size: 16px;
-    height: auto;
-    margin: 0;
-    outline: 0;
-    padding: 15px;
-    width: 100%;
-    background-color: #e8eeef;
-    color: #8a97a0;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
-    margin-bottom: 30px;
-  }
+.input-group-text {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
 
-  input[type="radio"],
-  input[type="checkbox"] {
-    margin: 0 4px 8px 0;
-  }
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-  select {
-    padding: 6px;
-    height: 32px;
-    border-radius: 2px;
-  }
-
-  fieldset {
-    margin-bottom: 30px;
-    border: none;
-  }
-
-  legend {
-    font-size: 1.4em;
-    margin-bottom: 10px;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-  }
-
-  label.light {
-    font-weight: 300;
-    display: inline;
-  }
-
-  .number {
-    background-color: #5fcf80;
-    color: #fff;
-    height: 30px;
-    width: 30px;
-    display: inline-block;
-    font-size: 0.8em;
-    margin-right: 4px;
-    line-height: 30px;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
-    border-radius: 100%;
-  }
-
+.submit-button:hover {
+  background-color: #0056b3;
 }
 </style>
-  
