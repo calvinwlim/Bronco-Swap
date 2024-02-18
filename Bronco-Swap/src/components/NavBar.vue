@@ -67,7 +67,8 @@ let searchProducts = async () => {
     let querySnapshot = await getDocs(query(listingsCollection));
     querySnapshot.forEach((doc) => {
       console.log(doc.id, ' => ', doc.data());
-      if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()))
+      const userid = JSON.parse(localStorage.getItem("user")).uid;
+      if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()) && doc.data().uid != userid)
         searchResults.push(doc.data());
     });
     if (searchResults.length > 0) {
