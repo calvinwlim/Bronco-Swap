@@ -2,6 +2,7 @@
   <div id="navigation">
     <nav>
       <RouterLink class="link" to="/">Home</RouterLink>
+      <RouterLink class="link" to="/about">About</RouterLink>
       <RouterLink class="link" to="/create">Create a Listing</RouterLink>
       <RouterLink class="link" to="/chat">Chat</RouterLink>
       <RouterLink class="link" to="/profile">View Profile</RouterLink>

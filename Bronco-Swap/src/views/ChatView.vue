@@ -4,6 +4,7 @@ import ChatsPage from "./pages/ChatsPage/index.vue";
 </script>
 
 <template>
+  
   <AuthPage v-if="!user" @onAuth="handleAuth" />
   <ChatsPage
     v-else

@@ -1,4 +1,9 @@
 <template>
+  <div v-if="user">
+    <img :src="user.photoURL" alt="Profile Picture" width="100" height="100">
+    <div>Name: {{ user.displayName }}</div>
+    <div>Email: {{ user.email }}</div>
+  </div>
     <div class="login-page">
       <div class="card">
         <form @submit.prevent="login">
@@ -34,6 +39,8 @@
   </template>
   
   <script>
+  let user = JSON.parse(localStorage.getItem("user"));
+
   import { loginRest, signupRest } from "./api";
   
   export default {
