@@ -4,7 +4,6 @@
       <RouterLink class="link" to="/">Home</RouterLink>
       <RouterLink class="link" :to="(!isLoggedIn) ? '/login' : '/create'">Create a Listing</RouterLink>
       <RouterLink class="link" to="/chat">Chat</RouterLink>
-      <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
     </div>
     <div class="search-container">
       <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..." />
@@ -105,7 +104,33 @@ const handleSignOut = () => {
 
   .link:hover {
     border-bottom: 2px solid blue;
+
   }
+
+.search {
+  width: 30%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.searchbar {
+  border: 2px lightgray;
+  background-color: rgb(243, 237, 237);
+  height: 30%;
+  border-radius: 4%;
+}
+
+.searchButton {
+  width: 5rem;
+  font-size: small;
+  text-align: center;
+  border-radius: 5%;
+  border: none;
+}
+
+.searchButton:hover {
+  background-color: rgb(118, 117, 117);
+  color: white;
+}
 
   .search-container {
     display: flex;
@@ -148,13 +173,13 @@ const handleSignOut = () => {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 99;
     top: 100%; // Adjust the top position
-    right: 0; // Align with the right edge of the parent
+  right: 0; // Align with the right edge of the parent
   }
 
   .dropdown:hover .dropdown-content {
     display: flex;
     flex-direction: column;
-    padding: auto;
+    width: 100%;
   }
   .profile-link {
     cursor: pointer;
