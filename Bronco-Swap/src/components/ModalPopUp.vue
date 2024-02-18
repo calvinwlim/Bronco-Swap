@@ -78,7 +78,7 @@ export default {
     max-width: 640px;
     width: 80%;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    background-color: #fff;
+    background-color: #F8f4f9;
     padding: 64px 16px;
 
     i {
@@ -106,7 +106,7 @@ export default {
 
       .itemPrice {
         font-size: 20px;
-        color: green;
+        color: #A5CC6b;
       }
     }
 
@@ -114,8 +114,8 @@ export default {
       padding: 20px 30px;
       border: none;
       font-size: 16px;
-      background-color: crimson;
-      color: #fff;
+      background-color: #862633;
+      color: #F8f4f9;
       cursor: pointer;
     }
   }
