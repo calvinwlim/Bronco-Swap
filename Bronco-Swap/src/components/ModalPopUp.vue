@@ -9,6 +9,7 @@
                 <h1 class="itemTitle">{{passProduct.title}}</h1>
                 <p class="itemDesc">{{ passProduct.description }}</p>
                 <p class="itemPrice">${{ passProduct.price }}</p>
+                <p class="userInfo">Posted by: {{ passProduct.displayName }} ({{ passProduct.email }})</p>
             
                 <button @click="close" type="button">Close</button>
             </div>
