@@ -169,12 +169,12 @@ a {
   text-decoration: none;
 }
 h1 {
-  font-weight: 900;
+  font-weight: 500;
   margin-bottom: 1rem;
 }
 h2 {
   font-size: 4rem;
-  font-weight: 900;
+  font-weight: 500;
   margin-bottom: 1rem;
 }
 main {
@@ -200,9 +200,9 @@ header {
 }
 .branding h1 {
   text-align: center;
-  font-size: 15px;
+  font-size: 20px;
   text-transform: uppercase;
-  color: #007bff;
+  color: rgb(34, 34, 34);
   margin: 0 0 20px 0;
 }
 .branding img.avatar {
@@ -240,11 +240,11 @@ header {
   width: 100%;
   max-width: 260px;
   padding: 8px 8px;
-  border: 1px solid #007bff;
+  border: 1px solid gray;
   border-radius: 50px;
   text-align: center;
   font-size: 13px;
-  color: #007bff;
+  color: gray;
   margin: 5px 0;
 }
 .branding ul li a {
@@ -261,9 +261,15 @@ header {
   margin: 0 0 40px 0;
 }
 .portfoliogallery .headings h2 {
-  color: #007bff;
-  font-size: 21px;
+  font-size: 28px;
   margin: 0 0 15px 0;
+}
+
+.searchHeader {
+  padding-top: 1rem;
+  text-align: center;
+  font-size: 28px;
+  margin: 30px 0;
 }
 .portfoliogallery .headings p {
   color: gray;
