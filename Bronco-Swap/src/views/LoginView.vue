@@ -4,7 +4,7 @@
       <h2 class="header">Get started by signing in with your SCU email below!</h2>
       <button class="google-button" @click="signInWithGoogle">
         <span class="google-icon">
-          <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google Icon">
+          <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google Icon" />
         </span>
         Sign in with Google
       </button>
@@ -14,31 +14,36 @@
 
 <script>
 // import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useRouter } from 'vue-router'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup
+} from 'firebase/auth'
 
 export default {
   name: 'UserProfile',
   data() {
     return {
       user: null
-    };
+    }
   },
   methods: {
     signInWithGoogle() {
-      console.log("method")
-      let router = useRouter();
-      const provider = new GoogleAuthProvider();
+      console.log('method')
+      let router = useRouter()
+      const provider = new GoogleAuthProvider()
       signInWithPopup(getAuth(), provider)
         .then((result) => {
-              this.user = result.user;
-              localStorage.setItem('user', JSON.stringify(this.user))
-              this.$router.push("/");
-          })
-          .catch((error) => {
-              console.error(error);
-             this.$router.push("/error");
-          });
+          this.user = result.user
+          localStorage.setItem('user', JSON.stringify(this.user))
+          this.$router.push('/')
+        })
+        .catch((error) => {
+          console.error(error)
+          this.$router.push('/error')
+        })
     }
   }
 }
@@ -46,17 +51,16 @@ export default {
 // const email = ref("");
 // const password = ref("");
 
-let user = null;
+let user = null
 const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider()
   signInWithPopup(getAuth(), provider)
     .then((result) => {
-      this.user = result.user;
-
+      this.user = result.user
     })
     .catch((error) => {
-      router.push("/error");
-    });
+      router.push('/error')
+    })
 }
 </script>
 
@@ -113,7 +117,6 @@ const signInWithGoogle = () => {
     width: 24px;
     height: 24px;
     vertical-align: middle;
-
   }
 
   .button-text {

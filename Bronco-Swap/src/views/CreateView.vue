@@ -9,17 +9,38 @@
             <fieldset>
               <div class="form-group">
                 <label for="fileInput">Upload Image</label>
-                <input id="fileInput" class="form-control" lang="en" type="file" accept=".jpg,.png, .jpeg" @change="updateImageEvent" required />
+                <input
+                  id="fileInput"
+                  class="form-control"
+                  lang="en"
+                  type="file"
+                  accept=".jpg,.png, .jpeg"
+                  @change="updateImageEvent"
+                  required
+                />
               </div>
 
               <div class="form-group">
                 <label for="itemTitle">Title</label>
-                <input v-model="userTitle" class="form-control" type="text" id="itemTitle" name="item_title" required>
+                <input
+                  v-model="userTitle"
+                  class="form-control"
+                  type="text"
+                  id="itemTitle"
+                  name="item_title"
+                  required
+                />
               </div>
 
               <div class="form-group">
                 <label for="category">Category</label>
-                <select v-model="selectedCategory" class="form-control" name="category" id="category" required>
+                <select
+                  v-model="selectedCategory"
+                  class="form-control"
+                  name="category"
+                  id="category"
+                  required
+                >
                   <option value="" disabled>Select category</option>
                   <option value="textbook">Textbook</option>
                   <option value="furniture">Furniture</option>
@@ -30,14 +51,32 @@
 
               <div class="form-group">
                 <label for="itemDescription">Description</label>
-                <textarea v-model="userDesc" class="form-control" id="itemDescription" name="item_description" required></textarea>
+                <textarea
+                  v-model="userDesc"
+                  class="form-control"
+                  id="itemDescription"
+                  name="item_description"
+                  required
+                ></textarea>
               </div>
 
               <div class="form-group">
                 <label for="currency-field">Price</label>
-                <input v-model="userPrice" class="textInput" type="text" name="currency-field" id="currency-field" value=""
-                       data-type="currency" placeholder="$0" required @input="validatePriceInput">
-                <p v-if="!isPriceValid" class="text-danger">Please enter a valid numeric value for the price.</p>
+                <input
+                  v-model="userPrice"
+                  class="textInput"
+                  type="text"
+                  name="currency-field"
+                  id="currency-field"
+                  value=""
+                  data-type="currency"
+                  placeholder="$0"
+                  required
+                  @input="validatePriceInput"
+                />
+                <p v-if="!isPriceValid" class="text-danger">
+                  Please enter a valid numeric value for the price.
+                </p>
               </div>
             </fieldset>
 
@@ -50,81 +89,77 @@
 </template>
 
 <script>
-import router from "@/router";
-import { addDoc, collection, query, getFirestore} from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import router from '@/router'
+import { addDoc, collection, query, getFirestore } from 'firebase/firestore'
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 
-const storage = getStorage();
-const db = getFirestore();
-const q = query(collection(db, "Listings"));
+const storage = getStorage()
+const db = getFirestore()
+const q = query(collection(db, 'Listings'))
 
 export default {
   data() {
     return {
       product: {
-        title: "",
+        title: '',
         price: 0,
-        image: "",
-        description: "",
+        image: '',
+        description: '',
         uid: JSON.parse(localStorage.getItem('user')).uid,
         displayName: JSON.parse(localStorage.getItem('user')).displayName,
         email: JSON.parse(localStorage.getItem('user')).email
       },
-      userTitle: "",
-      selectedCategory: "",
-      userDesc: "",
-      userPrice: "",
+      userTitle: '',
+      selectedCategory: '',
+      userDesc: '',
+      userPrice: '',
       isPriceValid: true
-    };
+    }
   },
 
   methods: {
     async handleInput(event) {
-      this.product.title = this.userTitle;
-      this.product.description = this.userDesc;
-      this.product.price = this.userPrice;
-      await this.previewImage();
-      addDoc(
-        q,
-        this.product
-      ).then(() => {
-        this.product.title = "";
-        this.product.price = "";
-        this.product.image = "";
-        this.product.description = "";
-        this.userTitle = "";
-        this.userDesc = "";
-        this.userPrice = "";
-        const fileInput = document.getElementById('fileInput'); // Replace 'fileInput' with the actual ID of your file input
+      this.product.title = this.userTitle
+      this.product.description = this.userDesc
+      this.product.price = this.userPrice
+      await this.previewImage()
+      addDoc(q, this.product).then(() => {
+        this.product.title = ''
+        this.product.price = ''
+        this.product.image = ''
+        this.product.description = ''
+        this.userTitle = ''
+        this.userDesc = ''
+        this.userPrice = ''
+        const fileInput = document.getElementById('fileInput') // Replace 'fileInput' with the actual ID of your file input
         if (fileInput) {
-          fileInput.value = '';
+          fileInput.value = ''
         }
-        alert("Listing Posted!")
-        router.push("/profile")
-      });
+        alert('Listing Posted!')
+        router.push('/profile')
+      })
     },
 
     updateImageEvent(event) {
-      this.imageEvent = event;
+      this.imageEvent = event
     },
 
     async previewImage() {
-      const imageData = this.imageEvent.target.files[0];
-      const imageName = imageData.name;
-      const storageRef = ref(storage, "images/" + imageName);
-      const uploadTask = uploadBytesResumable(storageRef, imageData);
-      const snapshot = await uploadTask;
-      this.product.image = await getDownloadURL(snapshot.ref);
+      const imageData = this.imageEvent.target.files[0]
+      const imageName = imageData.name
+      const storageRef = ref(storage, 'images/' + imageName)
+      const uploadTask = uploadBytesResumable(storageRef, imageData)
+      const snapshot = await uploadTask
+      this.product.image = await getDownloadURL(snapshot.ref)
     },
 
     validatePriceInput() {
       // Regular expression to match numeric values
-      const numericRegex = /^[0-9]*$/;
-      this.isPriceValid = numericRegex.test(this.userPrice);
-    },
-
+      const numericRegex = /^[0-9]*$/
+      this.isPriceValid = numericRegex.test(this.userPrice)
+    }
   }
-};
+}
 </script>
 
 <style scoped>

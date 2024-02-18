@@ -4,19 +4,23 @@
       <section class="next-generation-section">
         <article class="next-generation-article">
           <h1>
-            Bronco Swap - <br>
-            Sustainable Solutions <br>
+            Bronco Swap - <br />
+            Sustainable Solutions <br />
             for Campus Living
           </h1>
           <p class="next-generation-text">
-            Bronco Swap is more than just an online marketplace; it's a hub for sustainable living within university campuses. Our platform facilitates the exchange of goods while prioritizing sustainability, enabling students and faculty to trade, sell, and buy items with a minimal environmental footprint. From textbooks to furniture to clothing, Bronco Swap empowers users to make eco-conscious decisions, reducing waste and fostering a culture of reuse and resourcefulness on campus. Join us in our mission to create a greener future, one swap at a time, with Bronco Swap.
+            Bronco Swap is more than just an online marketplace; it's a hub for sustainable living
+            within university campuses. Our platform facilitates the exchange of goods while
+            prioritizing sustainability, enabling students and faculty to trade, sell, and buy items
+            with a minimal environmental footprint. From textbooks to furniture to clothing, Bronco
+            Swap empowers users to make eco-conscious decisions, reducing waste and fostering a
+            culture of reuse and resourcefulness on campus. Join us in our mission to create a
+            greener future, one swap at a time, with Bronco Swap.
           </p>
-          <button class="browse-button" @click="goToMarketplace">Browse</button>        </article>
+          <button class="browse-button" @click="goToMarketplace">Browse</button>
+        </article>
         <div class="next-generation-phones">
-          <img
-            src="../assets/images/image-mockups.png"
-            class="next-generation-image"
-          />
+          <img src="../assets/images/image-mockups.png" class="next-generation-image" />
         </div>
       </section>
     </main>
@@ -24,23 +28,20 @@
 </template>
 
 <script>
-
 export default {
-  name: "LandingPage",
-  components: {
-  },
+  name: 'LandingPage',
+  components: {},
   methods: {
     goToMarketplace() {
-      this.$router.push('/marketplace');
+      this.$router.push('/marketplace')
     }
   }
-};
+}
 </script>
 
 <style scoped>
-
 .gradient-background {
-  background: linear-gradient(300deg,white,#f6f1f1,#afd3e2);
+  background: linear-gradient(300deg, white, #f6f1f1, #afd3e2);
   background-size: 180% 180%;
   animation: gradient-animation 24s ease infinite;
 }
@@ -111,6 +112,5 @@ h1 {
 .browse-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
-
 </style>
 
