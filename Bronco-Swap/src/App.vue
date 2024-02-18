@@ -8,6 +8,10 @@ const isLoggedIn = ref(false);
 
 let auth;
 onMounted(() => {
+  if (!isLoggedIn) {
+    console.log('not logged in')
+    localStorage.setItem('user', null)
+  }
   auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user)

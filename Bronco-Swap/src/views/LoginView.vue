@@ -19,10 +19,12 @@ const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
       .then((result) => {
-          console.log("success!");
+          localStorage.setItem('user', JSON.stringify(result.user))
+          
           router.push("/home");
       })
       .catch((error) => {
+          console.error(error);
           router.push("/error");
       });
 }
