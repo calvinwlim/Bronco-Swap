@@ -164,6 +164,15 @@ ul {
 a {
   text-decoration: none;
 }
+h1 {
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
 main {
   width: 100%;
   margin: 0 auto 0 auto;
@@ -189,7 +198,7 @@ header {
   text-align: center;
   font-size: 15px;
   text-transform: uppercase;
-  color: royalblue;
+  color: #007bff;
   margin: 0 0 20px 0;
 }
 .branding img.avatar {
@@ -227,11 +236,11 @@ header {
   width: 100%;
   max-width: 260px;
   padding: 8px 8px;
-  border: 1px solid royalblue;
+  border: 1px solid #007bff;
   border-radius: 50px;
   text-align: center;
   font-size: 13px;
-  color: royalblue;
+  color: #007bff;
   margin: 5px 0;
 }
 .branding ul li a {
@@ -248,7 +257,7 @@ header {
   margin: 0 0 40px 0;
 }
 .portfoliogallery .headings h2 {
-  color: royalblue;
+  color: #007bff;
   font-size: 21px;
   margin: 0 0 15px 0;
 }
@@ -362,7 +371,7 @@ footer {
 }
 .social a {
   margin-left: 10px;
-  color: royalblue;
+  color: #007bff;
   text-decoration: none;
 }
 
@@ -430,19 +439,6 @@ footer {
   .modal-content {
     display: flex;
     flex-direction: column;
-
-    h1,
-    p {
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      font-size: 32px;
-    }
-
-    p {
-      font-size: 18px;
-    }
   }
 }
 </style>

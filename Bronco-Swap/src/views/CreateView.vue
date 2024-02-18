@@ -125,11 +125,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .create {
   min-height: 100vh;
   display: flex;
   align-items: center;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
 }
 
 .listing-form {

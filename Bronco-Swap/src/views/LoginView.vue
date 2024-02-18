@@ -1,16 +1,14 @@
 <template>
-  <div v-if="user">
-    <img :src="user.photoURL" alt="Profile Picture" width="100" height="100">
-    <div>Name: {{ user.displayName }}</div>
-    <div>Email: {{ user.email }}</div>
-  </div>
-  <div v-else>
-    <button class="google-button" @click="signInWithGoogle">
-      <span class="google-icon">
-        <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google Icon">
-      </span>
-      Sign in with Google
-    </button>
+  <div class="sign-in">
+    <div class="pop-up">
+      <h2 class="header">Get started by signing in with your SCU email below!</h2>
+      <button class="google-button" @click="signInWithGoogle">
+        <span class="google-icon">
+          <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google Icon">
+        </span>
+        Sign in with Google
+      </button>
+    </div>
   </div>
 </template>
 
@@ -29,7 +27,7 @@ export default {
   methods: {
     signInWithGoogle() {
       console.log("method")
-      let router = useRouter(); 
+      let router = useRouter();
       const provider = new GoogleAuthProvider();
       signInWithPopup(getAuth(), provider)
         .then((result) => {
@@ -54,17 +52,46 @@ const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then((result) => {
-          this.user = result.user;
+      this.user = result.user;
 
-      })
-      .catch((error) => {
-          router.push("/error");
-      });
+    })
+    .catch((error) => {
+      router.push("/error");
+    });
 }
 </script>
 
 <style lang="scss">
+.sign-in {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding-top: 5rem;
+}
+
+.pop-up {
+  width: 50%;
+  min-height: 30rem;
+  height: 100%;
+  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 4px solid rgb(236, 233, 233);
+  border-radius: 3%;
+}
+
+.header {
+  width: 80%;
+  text-align: center;
+}
+
 .google-button {
+  width: 60%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +102,7 @@ const signInWithGoogle = () => {
   font-size: 16px;
   font-weight: bold;
   color: #4285f4;
-  background-color: #EFECEC;
+  background-color: #dddbdb;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
