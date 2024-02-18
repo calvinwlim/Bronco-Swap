@@ -7,14 +7,10 @@
       <RouterLink class="link" to="/profile">View Profile</RouterLink>
       <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
       <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
-      <div class="search">
-        <input type="text" v-model="searchInput" placeholder="Search for items..." />
-        <button class="searchButton" @click="searchProducts">Search</button>
-      </div>
     </div>
     <div class="search">
-      <input class="searchbar" type="text" placeholder="Search for items..." />
-      <button class="searchButton">Search</button>
+      <input class="searchbar" type="text" v-model="searchInput" placeholder="Search for items..." />
+      <button class="searchButton" @click="searchProducts">Search</button>
     </div>
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
     <div class="dropdown" v-if="isLoggedIn">
@@ -64,7 +60,7 @@ let searchProducts = async () => {
     if (searchResults.length > 0) {
       localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
       // Redirect to /browse and pass searchResults as a route parameter
-      router.push('/browse');
+      await router.push('/browse');
       window.location.reload();
     } else {
       console.log('No search results found');
@@ -150,6 +146,7 @@ const handleSignOut = () => {
   
   .search-button:hover {
     background-color: #0056b3;
+  }
     
 .dropdown {
     position: relative;
