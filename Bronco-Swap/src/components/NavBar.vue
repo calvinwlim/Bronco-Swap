@@ -1,17 +1,19 @@
 <template>
   <div id="navigation">
-    <nav>
+    <div class="navbar">
+      <img class="logo">
       <RouterLink class="link" to="/">Home</RouterLink>
       <RouterLink class="link" to="/create">Create a Listing</RouterLink>
       <RouterLink class="link" to="/chat">Chat</RouterLink>
       <RouterLink class="link" to="/profile">View Profile</RouterLink>
       <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
       <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
-    </nav>
-    <div class="search">
-      <input type="text" placeholder="Search for items..." />
-      <button class="searchButton">Search</button>
+      <div class="search">
+        <input type="text" placeholder="Search for items..." />
+        <button class="searchButton">Search</button>
+      </div>
     </div>
+    
   </div>
 </template>
 
@@ -42,30 +44,49 @@ const handleSignOut = () => {
 </script>
 
 <style lang="scss" scoped>
-#navigation {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 50px;
-  margin-top: -4%;
-
-  nav {
+  .navbar{
+    width: 100%;
+    margin: auto;
+    padding: 35px 25px 35px 0;
     display: flex;
-    justify-content: space-evenly;
-    list-style: none;
-    padding: 0;
-    margin: 0 20px 0 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    float: right;
   }
 
-  .link {
-      font-size: 2rem;
-      padding: 2px 10px;
-      cursor: pointer;
+.logo{
+    width: 180px;
+    cursor: pointer;
+}
 
-      &:hover {
-        color: #7ca971;
-      }
-    }
+.navbar link{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+
+.navbar link{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.navbar link::after{
+    content:  '';
+    height: 3px;
+    width: 0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+
+.navbar link:hover::after{
+    width: 100%;
+}
 
   .search {
     position: relative;
@@ -100,5 +121,5 @@ const handleSignOut = () => {
     border: 0;
       border-radius: 10%;
   }
-}
+
 </style>
