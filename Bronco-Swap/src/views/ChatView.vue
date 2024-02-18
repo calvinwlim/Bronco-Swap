@@ -5,7 +5,8 @@ import ChatsPage from "./pages/ChatsPage/index.vue";
 
 <template>
   <!-- scrapped auth page, direct to google auth -->
-  <AuthPage v-if="!googleuser" @onAuth="handleAuth" />
+  <!-- <AuthPage v-if="!googleuser" @onAuth="handleAuth" /> -->
+  <div v-if="!googleuser">You must be logged in!</div>
   <ChatsPage
     v-else
     v-bind:username="googleuser.email"
@@ -19,6 +20,13 @@ import ChatsPage from "./pages/ChatsPage/index.vue";
 </template>
 
 <script>
+// onMounted(() => {
+//   console.log("Component mounted");
+
+//   // Example: Reload the page once when the component is mounted
+//   window.location.reload();
+// });
+
 let googleuser = JSON.parse(localStorage.getItem("user"));
 
 export default {
