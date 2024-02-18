@@ -3,6 +3,7 @@
     <nav>
       <RouterLink class="link" to="/">Home</RouterLink>
       <RouterLink class="link" to="/create">Create a Listing</RouterLink>
+      <RouterLink class="link" to="/chat">Chat</RouterLink>
       <RouterLink class="link" to="/profile">View Profile</RouterLink>
       <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
       <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
