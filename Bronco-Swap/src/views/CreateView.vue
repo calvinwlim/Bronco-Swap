@@ -19,7 +19,7 @@
 
               <div class="form-group">
                 <label for="category">Category</label>
-                <select v-model="selectedCategory" class="form-control" name="category" id="category" required>
+                <select v-model="userType" class="form-control" name="category" id="category" required>
                   <option value="" disabled>Select category</option>
                   <option value="textbook">Textbook</option>
                   <option value="furniture">Furniture</option>
@@ -66,12 +66,14 @@ export default {
         price: 0,
         image: "",
         description: "",
+        type: "",
         uid: JSON.parse(localStorage.getItem('user')).uid
       },
       userTitle: "",
       selectedCategory: "",
       userDesc: "",
       userPrice: "",
+      userType: "",
       isPriceValid: true
     };
   },
@@ -81,6 +83,7 @@ export default {
       this.product.title = this.userTitle;
       this.product.description = this.userDesc;
       this.product.price = this.userPrice;
+      this.product.type = this.userType;
       await this.previewImage();
       addDoc(
         q,
