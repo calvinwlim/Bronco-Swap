@@ -4,15 +4,23 @@ import ChatsPage from "./pages/ChatsPage/index.vue";
 </script>
 
 <template>
-  <AuthPage v-if="!user" @onAuth="handleAuth" />
+  <!-- scrapped auth page, direct to google auth -->
+  <AuthPage v-if="!googleuser" @onAuth="handleAuth" />
   <ChatsPage
+    v-else
+    v-bind:username="googleuser.email"
+    v-bind:secret="'1234'"
+  />
+  <!-- <ChatsPage
     v-else
     v-bind:username="user.username"
     v-bind:secret="user.secret"
-  />
+  /> -->
 </template>
 
 <script>
+let googleuser = JSON.parse(localStorage.getItem("user"));
+
 export default {
   data() {
     return {
