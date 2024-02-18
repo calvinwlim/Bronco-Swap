@@ -66,7 +66,9 @@ export default {
         price: 0,
         image: "",
         description: "",
-        uid: JSON.parse(localStorage.getItem('user')).uid
+        uid: JSON.parse(localStorage.getItem('user')).uid,
+        displayName: JSON.parse(localStorage.getItem('user')).displayName,
+        email: JSON.parse(localStorage.getItem('user')).email
       },
       userTitle: "",
       selectedCategory: "",
