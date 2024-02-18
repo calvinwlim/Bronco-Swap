@@ -179,7 +179,10 @@ export default {
 h1 {
   font-size: 4rem;
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+label {
+  margin-bottom: 10px;
 }
 
 .listing-form {
@@ -202,15 +205,15 @@ h1 {
 }
 
 .input-group-text {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #862633;
+  border-color: #862633;
   color: #fff;
 }
 
 .submit-button {
   width: 100%;
   padding: 15px;
-  background-color: #007bff;
+  background-color: #862633;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -219,6 +222,6 @@ h1 {
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+  background-color: #72202b;
 }
 </style>
