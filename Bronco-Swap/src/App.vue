@@ -1,105 +1,63 @@
+
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import { onMounted, ref } from "vue";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import router from './router';
-import NavBar from './components/NavBar.vue';
-
-const isLoggedIn = ref(false);
-
-let auth;
-onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user)
-      isLoggedIn.value = true;
-    else 
-      isLoggedIn.value = false;
-  });
-}) 
-
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
-}
-
+    import NavBar from './components/NavBar.vue';
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <NavBar />
+  <div id="app">
+    <NavBar />
+    <div class="content">
+        <router-view/>
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
-<style scoped>
-#app {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
-}
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+<style lang="scss" scoped>
+.teaser {
+  position: relative;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+  max-width: 768px;
+  height: 400px;
+  margin-bottom: 40px;
+  background-size: cover;
+  background-position: top;
+  border-radius: 20px;
+  overflow: hidden;
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .teaser-content {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    width: 210px;
+    height: 50px;
+    padding: 0 0 0 20px;
+    background-color: #111;
+    color: #efefef;
+    border-radius: 20px;
+    font-size: 2rem;
+    cursor: pointer;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  i {
+    font-size: 1.6rem;
   }
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+.infobox {
+  float: left;
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+  margin: 0 20px 20px 0;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+
+  .title {
+    font-weight: bold;
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  .value {
+    padding: 10px 0 0 0;
+    font-size: 2rem;
   }
 }
 </style>

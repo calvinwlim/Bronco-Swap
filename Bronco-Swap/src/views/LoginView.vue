@@ -32,11 +32,13 @@ export default {
       signInWithPopup(getAuth(), provider)
         .then((result) => {
               this.user = result.user;
+              localStorage.setItem('user', JSON.stringify(this.user))
               console.log(user.email)
               console.log(user.displayName)
               console.log("success!");
           })
           .catch((error) => {
+              console.error(error);
               router.push("/error");
           });
     }

@@ -1,69 +1,103 @@
 <template>
-    <MDBNavbar expand="lg" light bg="light" container class="fixed-top">
-      <MDBNavbarBrand href="#">Bronco Swap</MDBNavbarBrand>
-      <MDBNavbarToggler
-        @click="collapse1 = !collapse1"
-        target="#navbarSupportedContent"
-      ></MDBNavbarToggler>
-      <MDBCollapse v-model="collapse1" id="navbarSupportedContent">
-        <MDBNavbarNav class="mb-2 mb-lg-0">
-          <MDBNavbarItem to="#" active>
-            Home
-          </MDBNavbarItem>
-          <MDBNavbarItem href="#">
-            Browse
-          </MDBNavbarItem>
-          <MDBNavbarItem>
-            <!-- Navbar dropdown -->
-            <MDBDropdown class="nav-item" v-model="dropdown1">
-              <MDBDropdownToggle
-                tag="a"
-                class="nav-link"
-                @click="dropdown1 = !dropdown1"
-                >Account</MDBDropdownToggle
-              >
-              <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
-                <MDBDropdownItem href="#">Profile</MDBDropdownItem>
-                <MDBDropdownItem href="#">Sign In</MDBDropdownItem>
-                <MDBDropdownItem href="#"
-                  >Sign Out</MDBDropdownItem
-                >
-              </MDBDropdownMenu>
-            </MDBDropdown>
-          </MDBNavbarItem>
-        </MDBNavbarNav>
-        <!-- Search form -->
-        <form class="d-flex input-group w-auto">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Search for Items"
-            aria-label="Search"
-          />
-          <MDBBtn outline="primary">
-            Search
-          </MDBBtn>
-        </form>
-      </MDBCollapse>
-    </MDBNavbar>
-  </template>
+  <div id="navigation">
+    <nav>
+      <RouterLink class="link" to="/">Home</RouterLink>
+      <RouterLink class="link" to="/create">Create a Listing</RouterLink>
+      <RouterLink class="link" to="/profile">View Profile</RouterLink>
+      <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
+      <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
+    </nav>
+    <div class="search">
+      <input type="text" placeholder="Search for items..." />
+      <button class="searchButton">Search</button>
+    </div>
+  </div>
+</template>
 
-<script setup lang="ts">
-  import {
-    MDBBtn,
-    MDBNavbar,
-    MDBNavbarToggler,
-    MDBNavbarBrand,
-    MDBNavbarNav,
-    MDBNavbarItem,
-    MDBCollapse,
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem
-  } from 'mdb-vue-ui-kit';
-  import { ref } from 'vue';
+<script setup>
+import { RouterLink, RouterView } from 'vue-router';
+import { onMounted, ref } from "vue";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import router from '../router';
 
-  const collapse1 = ref(false);
-  const dropdown1 = ref(false);
+const isLoggedIn = ref(false);
+
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user)
+      isLoggedIn.value = true;
+    else
+      isLoggedIn.value = false;
+  });
+})
+
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    router.push("/");
+  });
+}
 </script>
+
+<style lang="scss" scoped>
+#navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 50px;
+  margin-top: -4%;
+
+  nav {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0;
+    margin: 0 20px 0 0;
+  }
+
+  .link {
+      font-size: 2rem;
+      padding: 2px 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: #7ca971;
+      }
+    }
+
+  .search {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+
+    input {
+      border: none;
+      outline: none;
+      width: calc(100% - 80px);
+      padding: 15px 60px 15px 20px;
+      margin: 0;
+      border-radius: 20px;
+      background-color: #efefef;
+      font-family: "Segoe UI", Tahoma;
+      font-size: 1rem;
+    }
+
+    i {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 1.6rem;
+      color: #aaa;
+      cursor: pointer;
+    }
+  }
+
+  .searchButton {
+    border: 0;
+      border-radius: 10%;
+  }
+}
+</style>
