@@ -15,6 +15,9 @@
 
             <fieldset>
 
+              <input class="form-control" lang="en" type="file" placeholder="sqs" accept=".jpg,.png"
+                @change="updateImageEvent" />
+
               <label for="itemTitle">Title</label>
               <input v-model="userTitle" type="text" id="itemTitle" name="item_title">
 
@@ -53,7 +56,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 
-
+const storage = getStorage();
 const db = getFirestore();
 const q = query(collection(db, "Listings"));
 
@@ -65,12 +68,20 @@ export default {
         price: 0,
         image: "",
         description: "",
-        uid: localStorage.getItem("uidUser")
-      }
+        uid: "1"
+      },
+      ProgressShow: false,
+      uploadValue: 0,
+      picture: null,
+      imageData: null,
+      imageName: null,
+      imageEvent: null
     };
   },
+
   methods: {
     handleInput(event) {
+      this.previewImage();
       this.product.title = this.userTitle;
       this.product.description = this.userDesc;
       this.product.price = this.userPrice;
@@ -85,10 +96,46 @@ export default {
         this.product.price = "";
         this.product.image = "";
         this.product.description = "";
-        this.product.uid = "";
+        this.product.uid = "1";
       });
     },
-  },
+
+    updateImageEvent(event) {
+      this.imageEvent = event;
+    },
+
+    previewImage() {
+      this.ProgressShow = true;
+      this.uploadValue = 0;
+      this.picture = null;
+      this.imageData = this.imageEvent.target.files[0];
+      this.imageName = this.imageEvent.target.files[0].name;
+      const storageRef = ref(storage, "images/" + this.imageName);
+      const uploadTask = uploadBytesResumable(storageRef, this.imageData);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+
+        () => {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+          this.uploadValue = 100;
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            this.product.image = downloadURL;
+          });
+        }
+      );
+    },
+  }
 };
 
 </script>
@@ -210,5 +257,6 @@ export default {
 
   }
 
-}</style>
+}
+</style>
   

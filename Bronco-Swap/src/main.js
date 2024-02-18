@@ -27,5 +27,4 @@ app.use(router)
 
 app.mount('#app')
 
-const db = getFirestore(app);
-export default db;
+
