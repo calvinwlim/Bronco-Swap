@@ -10,13 +10,16 @@
       <button class="searchButton" @click="searchProducts">Search</button>
     </div>
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
-    <div class="dropdown" v-if="isLoggedIn">
-        <span class="profile-link">Profile</span>
-        <div class="dropdown-content">
-          <RouterLink class="link" to="/profile">View Profile</RouterLink>
-          <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
-        </div>
+    <div class="dropdown" v-if="isLoggedIn" @click="toggleDropdown">
+      <span class="profile-link">Profile
+        <img v-if="!isDropdownVisible" class="arrow" src="../assets/icons8-sort-down-30.png"/>
+        <img v-if="isDropdownVisible" class="arrow" src="../assets/icons8-sort-up-30.png"/>
+      </span>
+      <div class="dropdown-content" v-show="isDropdownVisible">
+        <RouterLink class="link" to="/profile">View Profile</RouterLink>
+        <RouterLink class="link" to="/" @click="handleSignOut">Sign Out</RouterLink>
       </div>
+    </div>
   </div>
 </template>
 
@@ -32,6 +35,11 @@ const listingsCollection = collection(db, "Listings");
 const q = query(listingsCollection);
 const searchInput = ref('');
 const isLoggedIn = ref(false);
+const isDropdownVisible = ref(false);
+
+const toggleDropdown = () => {
+  isDropdownVisible.value = !isDropdownVisible.value;
+};
 
 let auth;
 onMounted(() => {
@@ -81,32 +89,35 @@ const handleSignOut = () => {
 </script>
 
 <style lang="scss" scoped>
-  .theNavbar{
-    width: 100%;
-    margin: auto;
-    padding: 35px 25px 35px 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+.theNavbar {
+  position: relative;
+  z-index: 998;
+  width: 100%;
+  margin: auto;
+  padding: 35px 25px 35px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .links {
-    width: 30%;
-    display: flex;
-    justify-content: space-evenly;
-  }
+.links {
+  width: 30%;
+  display: flex;
+  justify-content: space-evenly;
+}
 
-  .link:hover{
-    border-bottom: 2px solid blue;
+.link:hover {
+  border-bottom: 2px solid blue;
 
-  }
+}
 
 .search {
   width: 30%;
   display: flex;
   justify-content: space-evenly;
 }
+
 .searchbar {
   border: 2px lightgray;
   background-color: rgb(243, 237, 237);
@@ -127,55 +138,64 @@ const handleSignOut = () => {
   color: white;
 }
 
-  .search-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px 0 0 5px;
-  }
-  
-  .search-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .search-button:hover {
-    background-color: #0056b3;
-  }
-    
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
 .dropdown {
-    position: relative;
-    display: inline-block;
-  }
+  position: relative;
+  display: inline-block;
+  align-items: center;
+  z-index: 999;
+}
 
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 99;
-    top: calc(100% - 5px); // Adjust the top position
-    right: 0; // Align with the right edge of the parent
-  }
 
-  .dropdown:hover .dropdown-content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+.dropdown-content {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  top: calc(100% - 5px); // Adjust the top position
+  right: 0; // Align with the right edge of the parent
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-  .profile-link {
-    cursor: pointer;
-  }
+.arrow {
+  width: 16px;
+  top: -2px
+}
+
+.profile-link {
+  cursor: pointer;
+}
+
+.profile-link:hover {
+  border-bottom: 2px solid blue;
+
+}
 </style>
