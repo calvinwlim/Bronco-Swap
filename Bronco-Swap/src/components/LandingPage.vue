@@ -3,8 +3,8 @@
     <main class="padding-content">
       <section class="next-generation-section">
         <article class="next-generation-article">
-          <h1>
-            Bronco Swap - <br />
+          <h1 class="title">
+            Bronco Swap: <br />
             Sustainable Solutions <br />
             for Campus Living
           </h1>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'LandingPage',
   components: {},
@@ -49,8 +50,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(300deg, white, #f6f1f1, #afd3e2);
+  background: linear-gradient(300deg, white, #f6f1f1, #afd3e2) repeat-y;
   background-size: 180% 180%;
+  background-repeat:repeat;
+  background-attachment: scroll;
   animation: gradient-animation 24s ease infinite;
 }
 
@@ -87,11 +90,11 @@ export default {
 h1 {
   font-size: 4rem;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .next-generation-text {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .next-generation-phones {
@@ -120,5 +123,6 @@ h1 {
 .browse-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
+
 </style>
 
