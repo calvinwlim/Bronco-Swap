@@ -14,14 +14,15 @@
 		<link rel="stylesheet" href="css/simple-lightbox.css">
 		<link rel="stylesheet" href="fonts/fa/css/all.css">
 	</head>
-
-
-
 	<body>
-		
+
+        <Modal @close="toggleModal(null)" :modalActive="modalActive" :passProduct="passProduct">
+      <div class="modal-content">
+      </div>
+    </Modal>
 
 		 <main>
-   
+            
 			  <header>
 			      <div class="branding">
 			          <h1>DesignFolio</h1>
@@ -56,10 +57,10 @@
             
                         <div class="itemcontent">
                             <div class="overlay">
-                                <a href="" class="zoomlink"><i class="fa-solid fa-plus"></i></a>
+                                <a @click="toggleModal(item)" class="zoomlink"><i class="fa-solid fa-plus"></i></a>
                                 <div class="text">
                                 <h3>{{ item.title }}</h3>
-                                <a href="#" class="livelink">{{ item.price }} <i class="fa-solid fa-angle-right"></i></a>
+                                <a href="#" class="livelink">${{ item.price }}</a>
                                 </div>
                             </div>
                             <img :src="item.image" alt="" />
@@ -71,17 +72,10 @@
 			    <!--galleryitems-->
 			    
 			</section>
-			    <div class="pagination">
-			      <a href="#" class="active">1</a>
-			      <a href="#">2</a>
-			      <a href="#">3</a>
-			      <a href="#">4</a>
-			      <a href="#">5</a>
-			    </div>
-			    <!--pagination-->
 		
 			   
 			</main>
+
 	</body>
 </html>
 <!--HTML-->
@@ -89,7 +83,8 @@
 </template>
   
 <script>
-import Listing from "@/components/Listing.vue";
+import Modal from '../components/ModalPopUp.vue';
+import { ref } from "vue";
 import {
     addDoc,
     collection,
@@ -101,21 +96,31 @@ import {
     deleteDoc,
 } from "firebase/firestore";
 import {
-    getStorage,
-    ref,
-    getDownloadURL,
-    uploadBytesResumable,
+    getStorage
 } from "firebase/storage";
+
 
 const storage = getStorage();
 const db = getFirestore();
 const q = query(collection(db, "Listings"));
 
 export default {
+    components: {
+        Modal,
+    },
     data() {
         return {
             products: [],
-            id: 1
+            id: 1,
+            isModalVisible: false,
+            passProduct: {
+                key: 111111111,
+                title: "title",
+                description: "Description",
+                price: "price",
+                image: "url",
+            },
+            modalActive: false,
         };
     },
     created() {
@@ -134,8 +139,31 @@ export default {
             });
         });
     },
-    components: { Listing }
+//     setup() {
+//     const modalActive = ref(false);
+
+//     const toggleModal = (item) => {
+//         if (item) {
+//             console.log(item.title);
+//             passProduct = item;
+//         }
+//       modalActive.value = !modalActive.value;
+//     };
+
+//     return { modalActive };
+//   },
+  methods: {
+    toggleModal(item){
+        if(item){
+            this.passProduct = item;
+        }
+        this.modalActive = !this.modalActive;
+    }
+
+  }
+    
 }
+    
 </script>
 
 <style>
@@ -254,6 +282,7 @@ header{
   position:relative;
   border-radius:6px;
   overflow:hidden;
+  cursor: pointer;
 }
 .galleryitems .item .overlay{
   position:absolute; width:100%;
@@ -275,22 +304,22 @@ header{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:16px;
+  font-size:24px;
   color:#fff;
 }
 .galleryitems .item .overlay h3{
   color:#fff;
-  font-size:13px;
+  font-size:18px;
   margin:0 0 8px 0;
 }
 .galleryitems .item .overlay a.livelink{
   display:table;
   width:auto; height:auto;
   padding:5px 10px;
-  background:royalblue;
+  background:rgb(252, 20, 20);
   color:#fff;
   border-radius:30px;
-  font-size:9px;
+  font-size: 10px;
   text-transform:uppercase;
   position:relative;
   z-index:5;
@@ -306,38 +335,7 @@ header{
   object-fit:cover;
   object-position:center;
 }
-.pagination{
-  float:left;
-  width:100%;
-  margin:30px 0;
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.pagination a{
-  float:left;
-  width:32px; height:32px;
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:center;
-  color:gray;
-}
-.pagination a.active{
-  color:royalblue;
-  border-bottom:1px solid royalblue;
-}
-.companytext{
-  float:left;
-  width:100%;
-  font-size:12px;
-  color:gray;
-  margin:20px 0 0 0;
-}
-.companytext a{
-  color:gray;
-  border-bottom:1px solid gray;
-}
+
 
 
 footer{
@@ -443,6 +441,23 @@ a.link{
   .galleryitems .item .overlay a.livelink{
     padding:4px 8px;
     font-size:8px;
+  }
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+
+    h1,
+    p {
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 18px;
+    }
   }
 }
 </style>
