@@ -6,9 +6,9 @@
       <RouterLink class="link" to="/chat">Chat</RouterLink>
       <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
     </div>
-    <div class="search">
-      <input class="searchbar" type="text" v-model="searchInput" placeholder="Search for items..." />
-      <button class="searchButton" @click="searchProducts">Search</button>
+    <div class="search-container">
+      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..." />
+      <button class="search-button" @click="searchProducts">Search</button>
     </div>
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
     <div class="dropdown" v-if="isLoggedIn">
@@ -77,14 +77,13 @@ const handleSignOut = () => {
 </script>
 
 <style lang="scss" scoped>
-  .theNavbar{
+  .theNavbar {
     width: 100%;
-    margin: auto;
-    padding: 35px 25px 35px 0;
+    padding: 15px;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    background-color: transparent;
   }
 
   .links {
@@ -93,33 +92,15 @@ const handleSignOut = () => {
     justify-content: space-evenly;
   }
 
-  .link:hover{
-    border-bottom: 2px solid blue;
-
+  .link {
+    color: #333;
+    text-decoration: none;
+    transition: border-bottom 0.3s ease;
   }
 
-.search {
-  width: 30%;
-  display: flex;
-  justify-content: space-evenly;
-}
-.searchbar {
-  border: 1px lightgray;
-  height: 20%;
-}
-
-.searchButton {
-  width: 5rem;
-  font-size: small;
-  text-align: center;
-  border-radius: 5%;
-  border: none;
-}
-
-.searchButton:hover {
-  background-color: rgb(118, 117, 117);
-  color: white;
-}
+  .link:hover {
+    border-bottom: 2px solid blue;
+  }
 
   .search-container {
     display: flex;
@@ -128,17 +109,19 @@ const handleSignOut = () => {
   
   .search-input {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px 0 0 5px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px 0 0 6px;
+    font-size: 16px;
+    outline: none;
   }
   
   .search-button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 6px 6px 0;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
@@ -146,8 +129,8 @@ const handleSignOut = () => {
   .search-button:hover {
     background-color: #0056b3;
   }
-    
-.dropdown {
+  
+  .dropdown {
     position: relative;
     display: inline-block;
   }
@@ -160,7 +143,7 @@ const handleSignOut = () => {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 99;
     top: 100%; // Adjust the top position
-  right: 0; // Align with the right edge of the parent
+    right: 0; // Align with the right edge of the parent
   }
 
   .dropdown:hover .dropdown-content {
@@ -168,8 +151,16 @@ const handleSignOut = () => {
     flex-direction: column;
     padding: auto;
   }
-
   .profile-link {
     cursor: pointer;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    color: #333;
   }
+
+  .profile-link:hover {
+    background-color: #f0f0f0;
+  }
+  
 </style>
