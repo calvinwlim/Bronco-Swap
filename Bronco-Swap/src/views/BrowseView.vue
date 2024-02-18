@@ -37,11 +37,12 @@
             </div>
             <img :src="item.image" alt="" />
           </div>
+          <img :src="item.image" alt="" />
         </div>
-        <img :src="item.image" alt="" />
       </div>
       <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
     </div>
+    <h1 v-if="!searchResults" class="searchHeader">No results found. Sorry!</h1>
   </div>
 </template>
 
