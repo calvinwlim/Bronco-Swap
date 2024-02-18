@@ -6,6 +6,7 @@
   </Modal>
   <div class="content">
     <div class="sidebar">
+      <h1 class="searchHeader">Filter by Category:</h1>
       <label class="checkbox">
         <input type="checkbox" v-model="textbook" @input="updateItems()"> Textbooks
       </label>
@@ -135,7 +136,7 @@ export default {
   width: 20%;
   height: 100%;
   min-height: 41rem;
-  border-right: 4px solid lightgray;
+  border-right: 4px solid rgb(55,55,55);
 }
 
 .checkbox {
@@ -238,8 +239,7 @@ export default {
 .searchHeader {
   padding-top: 1rem;
   text-align: center;
-  font-size: 30px;
-  font-family: 'Times New Roman', Times, serif;
+  font-size: 28px;
   margin: 30px 0;
 }
 </style>
