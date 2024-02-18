@@ -62,14 +62,14 @@ onMounted(() => {
 let searchProducts = async () => {
   const searchTerm = searchInput.value.trim()
   if (searchTerm !== '') {
-    localStorage.setItem('lastSearch', searchTerm);
-    const searchResults = [];
-    let querySnapshot = await getDocs(query(listingsCollection));
+    localStorage.setItem('lastSearch', searchTerm)
+    const searchResults = []
+    let querySnapshot = await getDocs(query(listingsCollection))
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
+      console.log(doc.id, ' => ', doc.data())
       if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()))
-        searchResults.push(doc.data());
-    });
+        searchResults.push(doc.data())
+    })
     if (searchResults.length > 0) {
       localStorage.setItem('searchResults', JSON.stringify(searchResults)) // Store search results in local storage
       // Redirect to /browse and pass searchResults as a route parameter
@@ -95,24 +95,23 @@ const handleSignOut = () => {
 }
 
 const browseTab = async () => {
-  localStorage.setItem('lastSearch', "");
-  let uid = JSON.parse(localStorage.getItem("user")).uid;
+  localStorage.setItem('lastSearch', '')
+  let uid = JSON.parse(localStorage.getItem('user')).uid
   if (!uid) {
-    uid = "@#$%";
+    uid = '@#$%'
   }
-  console.log(uid);
-  const searchResults = [];
-  const querySnapshot = await getDocs(query(listingsCollection, where('uid', '!=', uid)));
+  console.log(uid)
+  const searchResults = []
+  const querySnapshot = await getDocs(query(listingsCollection, where('uid', '!=', uid)))
   querySnapshot.forEach((doc) => {
-      searchResults.push(doc.data());
-    });
-    console.log("before browse")
+    searchResults.push(doc.data())
+  })
+  console.log('before browse')
   console.log(searchResults)
-  localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
-  await router.push('/browse');
-  window.location.reload();
-};
-
+  localStorage.setItem('searchResults', JSON.stringify(searchResults)) // Store search results in local storage
+  await router.push('/browse')
+  window.location.reload()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -200,19 +199,24 @@ const browseTab = async () => {
 
 .search-input {
   flex: 1;
-  padding: 12px;
-  border: 1px solid #ced4da;
-  border-radius: 6px 0 0 6px;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #007bff; /* Add bottom border */
   font-size: 16px;
   outline: none;
+  transition: border-bottom-color 0.3s ease; /* Smooth transition for bottom border */
+}
+
+.search-input:focus {
+  border-bottom-color: #0056b3; /* Change bottom border color on focus */
 }
 
 .search-button {
-  padding: 12px 20px;
+  padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 0 6px 6px 0;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
