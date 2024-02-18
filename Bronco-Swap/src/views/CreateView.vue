@@ -19,7 +19,7 @@
                 @change="updateImageEvent" required />
 
               <label for="itemTitle">Title</label>
-              <input v-model="userTitle" type="text" id="itemTitle" name="item_title" required>
+              <input v-model="userTitle" class="textInput" type="text" id="itemTitle" name="item_title" required>
 
               <select name="cars" id="cars" required=true>
                 <option value="textbook">Textbook</option>
@@ -29,10 +29,10 @@
               </select>
 
               <label for="itemDescription">Description</label>
-              <input v-model="userDesc" type="text" id="itemDescription" name="item_description" required>
+              <input v-model="userDesc" class="textInput" type="text" id="itemDescription" name="item_description" required>
 
               <label for="currency-field">Price</label>
-              <input v-model="userPrice" type="text" name="currency-field" id="currency-field" value=""
+              <input v-model="userPrice" class="textInput" type="text" name="currency-field" id="currency-field" value=""
                 data-type="currency" placeholder="$0" required>
 
             </fieldset>
@@ -159,7 +159,6 @@ export default {
   }
 
   body {
-    font-family: 'Nunito', sans-serif;
     color: #384047;
   }
 
@@ -175,7 +174,7 @@ export default {
     text-align: center;
   }
 
-  input[type="text"],
+  .textInput,
   textarea,
   select {
     background: rgba(255, 255, 255, 0.1);
@@ -201,21 +200,6 @@ export default {
     padding: 6px;
     height: 32px;
     border-radius: 2px;
-  }
-
-  button {
-    padding: 19px 39px 18px 39px;
-    color: #FFF;
-    background-color: #4bc970;
-    font-size: 18px;
-    text-align: center;
-    font-style: normal;
-    border-radius: 5px;
-    width: 100%;
-    border: 1px solid #3ac162;
-    border-width: 1px 1px 3px;
-    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
-    margin-bottom: 10px;
   }
 
   fieldset {
@@ -250,14 +234,6 @@ export default {
     text-align: center;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
     border-radius: 100%;
-  }
-
-  @media screen and (min-width: 480px) {
-
-    form {
-      max-width: 480px;
-    }
-
   }
 
 }

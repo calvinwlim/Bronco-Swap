@@ -38,7 +38,7 @@ main{
   width:100%;
   padding:30px 60px;
   padding-left:460px;
-  font-family:'Manrope';
+
 }
 .portfoliogallery .headings{
   margin:0 0 40px 0;
@@ -147,7 +147,7 @@ main{
     height:auto;
     border-right:none;
     border-bottom:1px solid #ddd;
-    font-family:'Manrope';
+
     padding:30px 0;
   }
   .portfoliogallery{
