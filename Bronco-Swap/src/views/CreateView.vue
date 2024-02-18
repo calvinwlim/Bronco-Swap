@@ -35,7 +35,7 @@
               <div class="form-group">
                 <label for="category">Category</label>
                 <select
-                  v-model="selectedCategory"
+                  v-model="userType"
                   class="form-control"
                   name="category"
                   id="category"
