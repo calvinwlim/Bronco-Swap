@@ -111,7 +111,7 @@ export default {
     data() {
         return {
             products: [],
-            id: 1,
+            id: JSON.parse(localStorage.getItem('user')).uid,
             isModalVisible: false,
             passProduct: {
                 key: 111111111,
@@ -182,7 +182,6 @@ header{
   width:400px;
   height:100%;
   border-right:1px solid #ddd;
-  font-family:'Manrope';
   padding:30px 40px;
   overflow-y:auto;
   z-index:5;
@@ -247,7 +246,6 @@ header{
   width:100%;
   padding:30px 60px;
   padding-left:460px;
-  font-family:'Manrope';
 }
 .portfoliogallery .headings{
   margin:0 0 40px 0;
@@ -344,7 +342,6 @@ footer{
   width:400px;
   padding:30px 40px;
   z-index:6;
-  font-family:'Manrope';
 }
 .social{
   float:left;
@@ -362,17 +359,7 @@ footer{
   color:royalblue;
   text-decoration:none;
 }
-a.link{
-  display:table;
-  width:auto;
-  text-transform:uppercase;
-  margin:0 auto 0 auto;
-  text-align:center;
-  color:gray;
-  font-size:10px;
-  letter-spacing:3px;
-  border-bottom:1px solid gray;
-}
+
 
 
 
@@ -397,7 +384,6 @@ a.link{
     height:auto;
     border-right:none;
     border-bottom:1px solid #ddd;
-    font-family:'Manrope';
     padding:30px 0;
   }
   .portfoliogallery{

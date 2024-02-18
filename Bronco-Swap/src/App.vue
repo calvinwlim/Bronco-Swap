@@ -4,18 +4,22 @@
 </script>
 
 <template>
-  <div id="app">
-    <div class = "navbar">
-      <NavBar />
-    </div>
+    <NavBar class="navbar" />
     <div class="content">
         <router-view/>
     </div>
-  </div>
 </template>
 
 <style lang="scss" scoped>
-.navbar {
+
+.app {
   width: 100%;
+  display: columns;
+  justify-content: space-between;
+}
+
+.navbar {
+  padding: auto;
+  position: sticky;
 }
 </style>
