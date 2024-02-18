@@ -41,21 +41,28 @@ onMounted(() => {
   });
 })
 
-let searchProducts = async() => {
+let searchProducts = async () => {
   const searchTerm = searchInput.value.trim();
   if (searchTerm !== '') {
-        localStorage.setItem('lastSearch', searchTerm);
-
-        const querySnapshot = await getDocs(query(listingsCollection, where('title', '==', searchTerm)));
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data());
-          router.push("/browse");
-;        // Handle search results here (e.g., display them on the UI)
+    localStorage.setItem('lastSearch', searchTerm);
+    const searchResults = [];
+    const querySnapshot = await getDocs(query(listingsCollection, where('title', '==', searchTerm)));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, ' => ', doc.data());
+      searchResults.push(doc.data());
     });
-      } else {
-        console.log('Search input is blank');
-      }
-}
+    if (searchResults.length > 0) {
+      localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
+      // Redirect to /browse and pass searchResults as a route parameter
+      router.push('/browse');
+      window.location.reload();
+    } else {
+      console.log('No search results found');
+    }
+  } else {
+    console.log('Search input is blank');
+  }
+};
 
 const handleSignOut = () => {
   signOut(auth).then(() => {
