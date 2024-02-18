@@ -25,9 +25,9 @@
             
 			  <header>
 			      <div class="branding">
-			          <h1>DesignFolio</h1>
+			          <h1>My Listings</h1>
 			          <img src="" alt="" class="avatar" />
-			          <h2>John Doe</h2>
+			          <h2 id="userInfo"></h2>
 			          <p>
 			            I Create Beautiful Designs. <strong>My fee is affordable and I deliver fast</strong> (within timeframe). Try Me, Contact Below.
 			          </p>
@@ -99,7 +99,7 @@ import {
     getStorage
 } from "firebase/storage";
 
-
+let googleuser = JSON.parse(localStorage.getItem("user"));
 const storage = getStorage();
 const db = getFirestore();
 const q = query(collection(db, "Listings"));
@@ -139,20 +139,9 @@ export default {
             });
         });
     },
-//     setup() {
-//     const modalActive = ref(false);
+   
 
-//     const toggleModal = (item) => {
-//         if (item) {
-//             console.log(item.title);
-//             passProduct = item;
-//         }
-//       modalActive.value = !modalActive.value;
-//     };
-
-//     return { modalActive };
-//   },
-  methods: {
+    methods: {
     toggleModal(item){
         if(item){
             this.passProduct = item;
