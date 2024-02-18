@@ -68,60 +68,83 @@
 </template>
   
 <script>
-
 import Modal from '../components/ModalPopUp.vue'
 import { ref } from 'vue'
 import { onAuthStateChanged, getAuth } from 'firebase/auth'
 import { collection, query, getFirestore, onSnapshot } from 'firebase/firestore'
-import {
-    getStorage
-} from "firebase/storage";
-import "firebase/database";
 
 const db = getFirestore()
 const q = query(collection(db, 'Listings'))
 
 export default {
+  components: {
+    Modal
+  },
+  data() {
+    return {
+      products: [],
+      id: JSON.parse(localStorage.getItem('user')).uid,
+      displayName: '',
+      email: '',
+      photoURL: '',
+      phoneNumber: '',
+      isModalVisible: false,
+      passProduct: {
+        key: 111111111,
+        title: 'title',
+        description: 'Description',
+        price: 'price',
+        image: 'url',
+        email: 'email',
+        displayName: 'displayName'
+      },
+      modalActive: false
+    }
+  },
+  created() {
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in.
+        this.displayName = user.displayName
+        this.email = user.email
+        this.photoURL = user.photoURL
+        this.phoneNumber = user.phoneNumber ? user.phoneNumber : null
+      } else {
+        // No user is signed in.
+        // You may want to handle this case accordingly.
+      }
+    })
+    onSnapshot(q, (querySnapshot) => {
+      this.products = []
+      querySnapshot.forEach((doc) => {
+        if (doc.data().uid == this.id) {
+          this.products.push({
+            key: doc.id,
+            title: doc.data().title,
+            description: doc.data().description,
+            price: doc.data().price,
+            image: doc.data().image,
+            email: doc.data().email,
+            displayName: doc.data().displayName
+          })
+        }
+      })
+    })
+  },
+  //     setup() {
+  //     const modalActive = ref(false);
 
-    components: {
-        Modal,
-    },
-    data() {
-        return {
-            products: [],
-            id: JSON.parse(localStorage.getItem('user')).uid,
-            isModalVisible: false,
-            passProduct: {
-                key: 111111111,
-                title: "title",
-                description: "Description",
-                price: "price",
-                image: "url",
-                email: "email",
-                displayName: "name"
-            },
-            modalActive: false,
-        };
-    },
-    created() {
-        onSnapshot(q, (querySnapshot) => {
-            this.products = [];
-            querySnapshot.forEach((doc) => {
-                if (doc.data().uid == this.id) {
-                    this.products.push({
-                        key: doc.id,
-                        title: doc.data().title,
-                        description: doc.data().description,
-                        price: doc.data().price,
-                        image: doc.data().image,
-                        email: doc.data().email,
-                        displayName: doc.data().displayName
-                    });
-                }
-            });
-        });
-    },
-   
+  //     const toggleModal = (item) => {
+  //         if (item) {
+  //             console.log(item.title);
+  //             passProduct = item;
+  //         }
+  //       modalActive.value = !modalActive.value;
+  //     };
+
+  //     return { modalActive };
+  //   },
   methods: {
     toggleModal(item) {
       if (item) {
