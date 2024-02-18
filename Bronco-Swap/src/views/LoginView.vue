@@ -1,26 +1,62 @@
 <template>
-  <button class="google-button" @click="signInWithGoogle">
-    <span class="google-icon">
-      <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google Icon">
-    </span>
-    Sign in with Google
-  </button>
+  <div v-if="user">
+    <img :src="user.photoURL" alt="Profile Picture" width="100" height="100">
+    <div>Name: {{ user.displayName }}</div>
+    <div>Email: {{ user.email }}</div>
+  </div>
+  <div v-else>
+    <button class="google-button" @click="signInWithGoogle">
+      <span class="google-icon">
+        <img src="https://www.vectorlogo.zone/logos/google/google-icon.svg" alt="Google Icon">
+      </span>
+      Sign in with Google
+    </button>
+  </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
+// import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-const email = ref("");
-const password = ref("");
+
+export default {
+  name: 'UserProfile',
+  data() {
+    return {
+      user: null
+    };
+  },
+  methods: {
+    signInWithGoogle() {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(getAuth(), provider)
+        .then((result) => {
+              this.user = result.user;
+              console.log(user.email)
+              console.log(user.displayName)
+              console.log("success!");
+          })
+          .catch((error) => {
+              router.push("/error");
+          });
+    }
+  }
+}
+
+// const email = ref("");
+// const password = ref("");
 const router = useRouter(); 
 
+let user = null;
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
-      .then((result) => {
+    .then((result) => {
+          this.user = result.user;
+          console.log(user.email)
+          console.log(user.displayName)
           console.log("success!");
-          router.push("/");
+          // router.push("/");
       })
       .catch((error) => {
           router.push("/error");
