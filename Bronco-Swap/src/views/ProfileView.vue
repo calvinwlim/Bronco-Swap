@@ -37,7 +37,7 @@ export default {
     data() {
         return {
             products: [],
-            id: 1
+            id: JSON.parse(localStorage.getItem('user')).uid
         };
     },
     created() {

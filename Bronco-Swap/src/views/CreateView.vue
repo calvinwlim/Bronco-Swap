@@ -15,22 +15,29 @@
 
             <fieldset>
 
-              <input class="form-control" lang="en" type="file" placeholder="sqs" accept=".jpg,.png"
-                @change="updateImageEvent" />
+              <input id="fileInput" class="form-control" lang="en" type="file" placeholder="sqs" accept=".jpg,.png"
+                @change="updateImageEvent" required />
 
               <label for="itemTitle">Title</label>
-              <input v-model="userTitle" type="text" id="itemTitle" name="item_title">
+              <input v-model="userTitle" type="text" id="itemTitle" name="item_title" required>
+
+              <select name="cars" id="cars" required=true>
+                <option value="textbook">Textbook</option>
+                <option value="furniture">Furniture</option>
+                <option value="clothing">Clothing</option>
+                <option value="other">Other</option>
+              </select>
 
               <label for="itemDescription">Description</label>
-              <input v-model="userDesc" type="text" id="itemDescription" name="item_description">
+              <input v-model="userDesc" type="text" id="itemDescription" name="item_description" required>
 
               <label for="currency-field">Price</label>
               <input v-model="userPrice" type="text" name="currency-field" id="currency-field" value=""
-                data-type="currency" placeholder="$0">
+                data-type="currency" placeholder="$0" required>
 
             </fieldset>
 
-            <button @click="handleInput">Post</button>
+            <input type="submit" @click="handleInput"/>
 
           </form>
         </div>
@@ -39,6 +46,7 @@
   </body>
 </template>
 <script>
+import router from "@/router";
 import {
   addDoc,
   collection,
@@ -68,14 +76,17 @@ export default {
         price: 0,
         image: "",
         description: "",
-        uid: "1"
+        uid: JSON.parse(localStorage.getItem('user')).uid
       },
       ProgressShow: false,
       uploadValue: 0,
       picture: null,
       imageData: null,
       imageName: null,
-      imageEvent: null
+      imageEvent: null,
+      userTitle: "",
+      userDesc: "",
+      userPrice: ""
     };
   },
 
@@ -85,18 +96,23 @@ export default {
       this.product.description = this.userDesc;
       this.product.price = this.userPrice;
       await this.previewImage();
-      console.log(this.product.image)
       addDoc(
         q,
         this.product
       ).then(() => {
-        this.ProgressShow = false;
-        this.messageSuccess = "Added";
         this.product.title = "";
         this.product.price = "";
         this.product.image = "";
         this.product.description = "";
-        this.product.uid = "1";
+        this.userTitle = "";
+        this.userDesc = "";
+        this.userPrice = "";
+        const fileInput = document.getElementById('fileInput'); // Replace 'fileInput' with the actual ID of your file input
+        if (fileInput) {
+          fileInput.value = '';
+        }
+        alert("Listing Posted!")
+        router.push("/profile")
       });
     },
 
@@ -114,30 +130,13 @@ export default {
       const uploadTask = uploadBytesResumable(storageRef, this.imageData);
       const snapshot = await uploadTask;
       this.uploadValue =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-      // uploadTask.on(
-      //   "state_changed",
-      //   (snapshot) => {
-      //     // Observe state change events such as progress, pause, and resume
-      //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      //     this.uploadValue =
-      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      //   },
-      //   (error) => {
-      //     console.log(error.message);
-      //   },
+      await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log("File available at", downloadURL);
+        this.product.image = downloadURL;
+      });
 
-        //  async () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        // this.uploadValue = 100;
-        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          this.product.image = downloadURL;
-        });
-        
-      // );
     },
   }
 };
