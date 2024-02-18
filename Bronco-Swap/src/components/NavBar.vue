@@ -9,8 +9,8 @@
       <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
       <RouterLink class="link" to="/" @click="handleSignOut" v-if="isLoggedIn">Sign Out</RouterLink>
       <div class="search">
-        <input type="text" placeholder="Search for items..." />
-        <button class="searchButton">Search</button>
+        <input type="text" v-model="searchInput" placeholder="Search for items..." />
+        <button class="searchButton" @click="searchProducts">Search</button>
       </div>
     </div>
     
@@ -21,8 +21,13 @@
 import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import router from '../router';
 
+const db = getFirestore();
+const listingsCollection = collection(db, "Listings");
+const q = query(listingsCollection);
+const searchInput = ref('');
 const isLoggedIn = ref(false);
 
 let auth;
@@ -35,6 +40,22 @@ onMounted(() => {
       isLoggedIn.value = false;
   });
 })
+
+let searchProducts = async() => {
+  const searchTerm = searchInput.value.trim();
+  if (searchTerm !== '') {
+        localStorage.setItem('lastSearch', searchTerm);
+
+        const querySnapshot = await getDocs(query(listingsCollection, where('title', '==', searchTerm)));
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, ' => ', doc.data());
+          router.push("/browse");
+;        // Handle search results here (e.g., display them on the UI)
+    });
+      } else {
+        console.log('Search input is blank');
+      }
+}
 
 const handleSignOut = () => {
   signOut(auth).then(() => {
@@ -88,38 +109,30 @@ const handleSignOut = () => {
     width: 100%;
 }
 
-  .search {
-    position: relative;
+  .search-container {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 400px;
-
-    input {
-      border: none;
-      outline: none;
-      width: calc(100% - 80px);
-      padding: 15px 60px 15px 20px;
-      margin: 0;
-      border-radius: 20px;
-      background-color: #efefef;
-      font-family: "Segoe UI", Tahoma;
-      font-size: 1rem;
-    }
-
-    i {
-      position: absolute;
-      right: 20px;
-      top: 15px;
-      font-size: 1.6rem;
-      color: #aaa;
-      cursor: pointer;
-    }
+    align-items: center;
   }
-
-  .searchButton {
-    border: 0;
-      border-radius: 10%;
+  
+  .search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3;
   }
 
 </style>
