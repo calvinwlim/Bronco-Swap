@@ -13,7 +13,9 @@
       <link rel="stylesheet" href="css/simple-lightbox.css" />
       <link rel="stylesheet" href="fonts/fa/css/all.css" />
     </head>
+
     <body>
+      <div id="app" class="gradient-background">
       <Modal @close="toggleModal(null)" :modalActive="modalActive" :passProduct="passProduct">
         <div class="modal-content"></div>
       </Modal>
@@ -63,6 +65,7 @@
           <!--galleryitems-->
         </section>
       </main>
+    </div>
     </body>
   </html>
 </template>

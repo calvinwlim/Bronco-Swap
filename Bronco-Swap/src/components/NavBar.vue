@@ -25,8 +25,8 @@
         <img v-if="isDropdownVisible" class="arrow" src="../assets/icons-arrow-up.png" />
       </span>
       <div class="dropdown-content" v-show="isDropdownVisible">
-        <RouterLink class="link" to="/profile">View Profile</RouterLink>
-        <RouterLink class="link" to="/" @click="handleSignOut">Sign Out</RouterLink>
+        <RouterLink class="link drops" to="/profile">View Profile</RouterLink>
+        <RouterLink class="link drops" to="/" @click="handleSignOut">Sign Out</RouterLink>
       </div>
     </div>
   </div>
@@ -128,7 +128,7 @@ const browseTab = async () => {
   align-items: center;
   justify-content: space-between;
   height: 80px;
-  background: linear-gradient(300deg, #A5CC6b, #646e78, #862633) repeat-y;
+  background: #862633;
 }
 .links {
   width: 30%;
@@ -169,7 +169,7 @@ const browseTab = async () => {
 
 .dropdown-content {
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: #862633;
   padding: 1rem;
   border-radius: 2%;
   min-width: 160px;
@@ -192,6 +192,10 @@ const browseTab = async () => {
   cursor: pointer;
 }
 
+.drops {
+  margin: 20 20;
+}
+
 .search-container {
   display: flex;
   align-items: center;
@@ -209,9 +213,8 @@ const browseTab = async () => {
 
 .search-button {
   padding: 12px 20px;
-  background-color: #A5CC6b;
+  background-color: transparent;
   color: #f9f9f9;
-  border: none;
   border-radius: 0 6px 6px 0;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -220,10 +223,10 @@ const browseTab = async () => {
 }
 
 .search-button:hover {
-  background-color: #8aab59;
+  background-color: #862633;
 }
 
 .profile-link:hover {
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid #f9f9f9;
 }
 </style>
