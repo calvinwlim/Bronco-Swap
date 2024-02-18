@@ -1,5 +1,5 @@
 <script setup>
-// import AuthPage from './pages/AuthPage/index.vue'
+import AuthPage from './pages/AuthPage/index.vue'
 import ChatsPage from './pages/ChatsPage/index.vue'
 import { loginRest, signupRest } from './pages/AuthPage/api'
 </script>
