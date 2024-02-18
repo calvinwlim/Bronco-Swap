@@ -82,6 +82,7 @@ const handleSignOut = () => {
   localStorage.setItem("user", null)
   signOut(auth).then(() => {
     router.push("/");
+    window.location.reload();
   });
 }
 

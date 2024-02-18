@@ -37,7 +37,9 @@ if (googleuser) {
         console.log("Login error", error);
         signupRest(
           googleuser.email, // username
-          '1234' //pass
+          '1234', //pass
+          googleuser.email, // email
+          googleuser.displayName //firstlast
         )
         .catch((error) => console.log("Sign up error", error));
       }

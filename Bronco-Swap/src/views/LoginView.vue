@@ -31,14 +31,15 @@ export default {
       const provider = new GoogleAuthProvider();
       signInWithPopup(getAuth(), provider)
         .then((result) => {
-          this.user = result.user;
-          localStorage.setItem('user', JSON.stringify(this.user))
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          console.error(error);
-          this.$router.push("/error");
-        });
+              this.user = result.user;
+              localStorage.setItem('user', JSON.stringify(this.user))
+              this.$router.push("/");
+              window.location.reload();
+          })
+          .catch((error) => {
+              console.error(error);
+             this.$router.push("/error");
+          });
     }
   }
 }
