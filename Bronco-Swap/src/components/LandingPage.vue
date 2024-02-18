@@ -36,6 +36,7 @@ export default {
 <style scoped>
 .padding-content {
   padding-left: 8rem;
+  font-weight: 500;
 }
 
 /* next-generation */
@@ -53,7 +54,7 @@ export default {
 
 h1 {
   font-size: 4rem;
-  font-weight: 50;
+  font-weight: 900;
   margin-bottom: 1rem;
 }
 
