@@ -2,18 +2,26 @@
   <div class="theNavbar">
     <div class="links">
       <RouterLink class="link" to="/">Home</RouterLink>
-      <RouterLink class="link" :to="(!isLoggedIn) ? '/login' : '/create'">Create a Listing</RouterLink>
+      <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/create'"
+        >Create a Listing</RouterLink
+      >
       <RouterLink class="link" to="/chat">Chat</RouterLink>
     </div>
     <div class="search-container">
-      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..." />
+      <input
+        class="search-input"
+        type="text"
+        v-model="searchInput"
+        placeholder="Search for items..."
+      />
       <button class="search-button" @click="searchProducts">Search</button>
     </div>
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
     <div class="dropdown" v-if="isLoggedIn" @click="toggleDropdown">
-      <span class="profile-link">Profile
-        <img v-if="!isDropdownVisible" class="arrow" src="../assets/icons8-sort-down-30.png"/>
-        <img v-if="isDropdownVisible" class="arrow" src="../assets/icons8-sort-up-30.png"/>
+      <span class="profile-link"
+        >Profile
+        <img v-if="!isDropdownVisible" class="arrow" src="../assets/icons8-sort-down-30.png" />
+        <img v-if="isDropdownVisible" class="arrow" src="../assets/icons8-sort-up-30.png" />
       </span>
       <div class="dropdown-content" v-show="isDropdownVisible">
         <RouterLink class="link" to="/profile">View Profile</RouterLink>
@@ -24,69 +32,65 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import { onMounted, ref } from "vue";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-import router from '../router';
+import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
+import router from '../router'
 
-const db = getFirestore();
-const listingsCollection = collection(db, "Listings");
-const q = query(listingsCollection);
-const searchInput = ref('');
-const isLoggedIn = ref(false);
-const isDropdownVisible = ref(false);
+const db = getFirestore()
+const listingsCollection = collection(db, 'Listings')
+const q = query(listingsCollection)
+const searchInput = ref('')
+const isLoggedIn = ref(false)
+const isDropdownVisible = ref(false)
 
 const toggleDropdown = () => {
-  isDropdownVisible.value = !isDropdownVisible.value;
-};
+  isDropdownVisible.value = !isDropdownVisible.value
+}
 
-let auth;
+let auth
 onMounted(() => {
-  auth = getAuth();
+  auth = getAuth()
   onAuthStateChanged(auth, (user) => {
-    if (user)
-      isLoggedIn.value = true;
-    else
-      isLoggedIn.value = false;
-  });
+    if (user) isLoggedIn.value = true
+    else isLoggedIn.value = false
+  })
 })
 
 let searchProducts = async () => {
-  const searchTerm = searchInput.value.trim();
+  const searchTerm = searchInput.value.trim()
   if (searchTerm !== '') {
-    localStorage.setItem('lastSearch', searchTerm);
-    const searchResults = [];
-    const querySnapshot = await getDocs(query(listingsCollection, where('title', '==', searchTerm)));
+    localStorage.setItem('lastSearch', searchTerm)
+    const searchResults = []
+    const querySnapshot = await getDocs(query(listingsCollection, where('title', '==', searchTerm)))
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-      searchResults.push(doc.data());
-    });
+      console.log(doc.id, ' => ', doc.data())
+      searchResults.push(doc.data())
+    })
     if (searchResults.length > 0) {
-      localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
+      localStorage.setItem('searchResults', JSON.stringify(searchResults)) // Store search results in local storage
       // Redirect to /browse and pass searchResults as a route parameter
-      await router.push('/browse');
-      window.location.reload();
+      await router.push('/browse')
+      window.location.reload()
     } else {
-      localStorage.setItem('searchResults', null);
-      await router.push('/browse');
-      window.location.reload();
-      console.log('No search results found');
+      localStorage.setItem('searchResults', null)
+      await router.push('/browse')
+      window.location.reload()
+      console.log('No search results found')
     }
   } else {
-    console.log('Search input is blank');
+    console.log('Search input is blank')
   }
-};
-
-const handleSignOut = () => {
-  localStorage.setItem("user", null)
-  signOut(auth).then(() => {
-    router.push("/");
-    window.location.reload();
-  });
 }
 
-
+const handleSignOut = () => {
+  localStorage.setItem('user', null)
+  signOut(auth).then(() => {
+    router.push('/')
+    window.location.reload()
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -99,7 +103,7 @@ const handleSignOut = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .links {
@@ -145,7 +149,6 @@ const handleSignOut = () => {
   z-index: 999;
 }
 
-
 .dropdown-content {
   position: absolute;
   background-color: #f9f9f9;
@@ -161,43 +164,42 @@ const handleSignOut = () => {
 
 .arrow {
   width: 16px;
-  top: -2px
+  top: -2px;
 }
 
 .profile-link {
   cursor: pointer;
 }
 
-  .search-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 6px 0 0 6px;
-    font-size: 16px;
-    outline: none;
-  }
-  
-  .search-button {
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 0 6px 6px 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .search-button:hover {
-    background-color: #0056b3;
-  }
+.search-container {
+  display: flex;
+  align-items: center;
+}
 
-  .profile-link:hover {
-    border-bottom: 2px solid blue;
-  }
-  
+.search-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px 0 0 6px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.profile-link:hover {
+  border-bottom: 2px solid blue;
+}
 </style>
