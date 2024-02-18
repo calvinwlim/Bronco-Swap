@@ -8,6 +8,8 @@
             Sustainable Solutions <br />
             for Campus Living
           </h1>
+          <br />
+      <br />
           <p class="next-generation-text">
             Bronco Swap is more than just an online marketplace; it's a hub for sustainable living
             within university campuses. Our platform facilitates the exchange of goods while
@@ -16,7 +18,8 @@
             Swap empowers users to make eco-conscious decisions, reducing waste and fostering a
             culture of reuse and resourcefulness on campus. Join us in our mission to create a
             greener future, one swap at a time, with Bronco Swap.
-          </p>
+          </p> <br />
+      <br />
           <button class="browse-button" @click="goToMarketplace">Browse</button>
         </article>
         <div class="next-generation-phones">
@@ -26,6 +29,10 @@
       <br />
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+     
     </main>
   </div>
 </template>
@@ -44,14 +51,14 @@ export default {
 </script>
 
 <style scoped>
+html,body { height:100%; }
 .gradient-background {
-  margin: 0;
-  padding: 0;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(300deg, white, #f6f1f1, #afd3e2) repeat-y;
-  background-size: 180% 180%;
+  background: linear-gradient(300deg, #A5CC6b, #646e78, #862633) repeat-y;
+  background-size: 100vw 100vh;
   background-repeat:repeat;
   background-attachment: scroll;
   animation: gradient-animation 24s ease infinite;
@@ -78,6 +85,7 @@ export default {
 .next-generation-section {
   display: flex;
   overflow: hidden;
+  color: #F8f4f9;
 }
 
 .next-generation-article {
@@ -107,8 +115,8 @@ h1 {
 }
 
 .browse-button {
-  background-color: #007bff; /* Blue color */
-  color: white; /* Text color */
+  background-color: #A5CC6b; /* Blue color */
+  color: #F8f4f9; /* Text color */
   border: none; /* Remove border */
   border-radius: 20px; /* Rounded corners */
   padding: 10px 20px; /* Padding for the button */
@@ -121,7 +129,7 @@ h1 {
 }
 
 .browse-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #8cad5b; /* Darker blue on hover */
 }
 
 </style>
