@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from './router';
+import NavBar from './components/NavBar.vue';
 
 const isLoggedIn = ref(false);
 
@@ -28,6 +29,7 @@ const handleSignOut = () => {
 <template>
   <header>
     <div class="wrapper">
+      <NavBar />
     </div>
   </header>
 
@@ -35,6 +37,10 @@ const handleSignOut = () => {
 </template>
 
 <style scoped>
+#app {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
