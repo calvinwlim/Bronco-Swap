@@ -67,7 +67,8 @@ let searchProducts = async () => {
     let querySnapshot = await getDocs(query(listingsCollection));
     querySnapshot.forEach((doc) => {
       console.log(doc.id, ' => ', doc.data());
-      if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()))
+      const userid = JSON.parse(localStorage.getItem("user")).uid;
+      if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()) && doc.data().uid != userid)
         searchResults.push(doc.data());
     });
     if (searchResults.length > 0) {
@@ -174,6 +175,8 @@ const browseTab = async () => {
 .dropdown-content {
   position: absolute;
   background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 2%;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -196,6 +199,7 @@ const browseTab = async () => {
 .search-container {
   display: flex;
   align-items: center;
+  width: 40%;
 }
 
 .search-input {
