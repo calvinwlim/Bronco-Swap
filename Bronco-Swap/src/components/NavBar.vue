@@ -7,7 +7,7 @@
       <RouterLink class="link" to="/browse" @click="browseTab">Browse</RouterLink>
     </div>
     <div class="search-container">
-      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..." />
+      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..."/>
       <button class="search-button" @click="searchProducts">Search</button>
     </div>
 
@@ -20,6 +20,7 @@
         <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>
         <RouterLink class="link drop" to="/browse" @click="browseTab">Browse</RouterLink>
       </div>
+      <img class="mobile-search" src="../assets/search-icon.png" @click="router.push('/search')"/>
     </div>
 
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
@@ -307,6 +308,10 @@ const browseTab = async () => {
   }
 
   .hamburger:hover {
+    cursor: pointer;
+  }
+
+  .mobile-search:hover {
     cursor: pointer;
   }
 }

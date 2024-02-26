@@ -5,23 +5,25 @@ import NavBar from './components/NavBar.vue'
 
 <template>
   <div class="background">
-  <NavBar class="navbar" />
-  <div class="content">
-    <router-view />
-  </div>
+    <NavBar class="navbar" />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.app {
+.content {
   width: 100%;
   display: columns;
   justify-content: space-between;
 }
+
 .background {
   background-color: #f8f3ec;
-  height: 1000px;
+  min-height: 100vh;
 }
+
 .navbar {
   padding: auto;
   position: sticky;

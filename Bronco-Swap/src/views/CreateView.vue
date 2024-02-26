@@ -225,4 +225,20 @@ label {
 .submit-button:hover {
   background-color: #72202b;
 }
+
+@media (max-width: 790px) {
+  .container {
+    display: flex;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  .justify-content-center {
+    width: 100vw;
+  }
+}
+
 </style>

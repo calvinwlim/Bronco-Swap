@@ -1,16 +1,18 @@
 <template>
   <div id="app" class="gradient-background">
     <main class="padding-content">
-      <img src="../assets/second-hand.png">
       <section class="next-generation-section">
         <article class="next-generation-article">
-          <h1 class="title">
-            Bronco Swap: <br />
-            Sustainable Solutions <br />
-            for Campus Living
-          </h1>
-          <br />
-      <br />
+          <div class="headers">
+            <h1 class="title">
+              Bronco Swap: <br />
+              Sustainable Solutions <br />
+              for Campus Living
+            </h1>
+            <div class="header-image">
+              <img src="../assets/second-hand.png">
+            </div>
+          </div>
           <p class="next-generation-text">
             Bronco Swap is more than just an online marketplace; it's a hub for sustainable living
             within university campuses. Our platform facilitates the exchange of goods while
@@ -19,19 +21,10 @@
             Swap empowers users to make eco-conscious decisions, reducing waste and fostering a
             culture of reuse and resourcefulness on campus. Join us in our mission to create a
             greener future, one swap at a time, with Bronco Swap.
-          </p> 
+          </p>
           <button class="browse-button" @click="goToMarketplace">Browse</button>
         </article>
       </section>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-     
     </main>
   </div>
 </template>
@@ -50,7 +43,11 @@ export default {
 </script>
 
 <style scoped>
-html,body { height:100%; }
+html,
+body {
+  height: 100%;
+}
+
 .gradient-background {
   height: 100%;
   width: 100%;
@@ -59,7 +56,7 @@ html,body { height:100%; }
   align-items: center;
   background: #f8f3ec;
   background-size: 100vw 100vh;
-  background-repeat:repeat;
+  background-repeat: repeat;
   background-attachment: scroll;
   animation: gradient-animation 24s ease infinite;
 }
@@ -68,28 +65,39 @@ html,body { height:100%; }
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
 
+.headers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.header-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .padding-content {
-  padding-left: 8rem;
+  display: flex;
+  justify-content: center;
   font-weight: 500;
 }
 
 img {
-  float: right;
-  max-width: 350px;
-  min-width: 200px;
-  margin-right: 10%;
-  margin-top: 100px;
+  width: 80%;
 }
 
-/* next-generation */
 .next-generation-section {
   display: flex;
   overflow: hidden;
@@ -99,14 +107,13 @@ img {
 .next-generation-article {
   display: flex;
   flex-direction: column;
-  padding-top: 10rem;
-  padding-left: 1rem;
+  padding: 0 1rem 1rem;
 }
 
 h1 {
   font-size: 4rem;
   font-weight: 900;
-  margin-bottom: 5rem;
+  margin-top: 5rem;
 }
 
 .next-generation-text {
@@ -114,22 +121,32 @@ h1 {
 }
 
 .browse-button {
-  background-color: #862633; /* Blue color */
-  color: #F8f4f9; /* Text color */
-  border: none; /* Remove border */
-  border-radius: 20px; /* Rounded corners */
-  padding: 10px 20px; /* Padding for the button */
-  font-size: 16px; /* Font size */
-  cursor: pointer; /* Cursor style */
-  transition: background-color 0.3s ease; /* Smooth transition */
-  width: 100%; /* Set width to 100% */
-  max-width: 200px; /* Limit maximum width */
-  box-sizing: border-box; /* Include padding and border in width */
+  background-color: #862633;
+  color: #F8f4f9;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
 }
 
 .browse-button:hover {
-  background-color: #6c1b26; /* Darker blue on hover */
+  background-color: #6c1b26;
 }
 
-</style>
+@media (max-width: 790px) {
+  .headers {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-size: 3rem;
+    padding-bottom: 2rem;
+  }
+}</style>
 
