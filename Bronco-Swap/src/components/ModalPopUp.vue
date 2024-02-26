@@ -100,6 +100,7 @@ export default {
       img {
         max-width: 350px;
         min-width: 250px;
+        max-height: 500px;
         margin-bottom: 15px;
         border-radius: 10px;
       }

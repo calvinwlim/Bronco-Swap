@@ -24,7 +24,7 @@
         <header>
           <div class="branding">
             <h1>{{ displayName }}</h1>
-            <img :src="photoURL" alt="Avatar" class="avatar" />
+            <img :src="photoURL" referrerpolicy="no-referrer" alt="Avatar" class="avatar" />
             <ul>
               <li>
                 <i class="fa-solid fa-envelope"></i> Email:

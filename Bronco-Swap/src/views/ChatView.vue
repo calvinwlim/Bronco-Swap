@@ -29,7 +29,6 @@ let googleuser = JSON.parse(localStorage.getItem('user'))
 // checks if user not in database, signs them up
 if (googleuser) {
   loginRest(googleuser.email, '1234').catch((error) => {
-    console.log('Login error', error)
     signupRest(
       googleuser.email, // username
       '1234', //pass

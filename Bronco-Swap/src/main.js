@@ -13,11 +13,12 @@ import router from './router'
 const firebaseConfig = {
   apiKey: "AIzaSyAkMW0BEIry_tKws6h3NHOUHpDAGCy9744",
   authDomain: "bronco-swap.firebaseapp.com",
+  databaseURL: "https://bronco-swap-default-rtdb.firebaseio.com",
   projectId: "bronco-swap",
   storageBucket: "bronco-swap.appspot.com",
   messagingSenderId: "899198764619",
-  appId: "1:899198764619:web:4a2336eb2112ed08ddafce",
-  measurementId: "G-XD5YPPV2WD"
+  appId: "1:899198764619:web:f5a4878f421f6d67ddafce",
+  measurementId: "G-ZLP3956T4T"
 };
 
 initializeApp(firebaseConfig);

@@ -53,6 +53,7 @@ export default {
 html,body { height:100%; }
 .gradient-background {
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

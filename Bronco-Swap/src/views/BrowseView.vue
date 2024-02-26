@@ -24,7 +24,7 @@
       </label>
     </div>
     <div class="browse">
-      <h1 class="searchHeader" v-if="searchResults && searchText != ''">Search Results for "{{ this.searchTerm }}"</h1>
+      <h1 class="searchHeader" v-if="searchResults && searchTerm.length > 0">Search Results for "{{ this.searchTerm }}"</h1>
       <div v-if="searchResults" class="galleryitems">
 
         <div v-for="item in searchResults" class="item">
@@ -36,7 +36,7 @@
                 <a href="#" class="livelink">{{ item.price }} <i class="fa-solid fa-angle-right"></i></a>
               </div>
             </div>
-            <img :src="item.image" alt="" />
+            <img class="item-image" :src="item.image" alt="" />
 
           </div>
         </div>
@@ -72,7 +72,6 @@ export default {
       furniture: false,
       other: false,
       searchResults: JSON.parse(localStorage.getItem('searchResults')),
-      searchText: localStorage.getItem("searchText")
     };
   },
   watch: {
@@ -89,10 +88,6 @@ export default {
       this.modalActive = !this.modalActive;
     },
     updateItems(type, bool) {
-      console.log('textbook:', this.textbook);
-      console.log('clothing:', this.clothing);
-      console.log('furniture:', this.furniture);
-      console.log('other:', this.other);
       let storedSearchResults = JSON.parse(localStorage.getItem('searchResults')) || [];
       let types = []
       this.$nextTick(() => {
@@ -105,9 +100,7 @@ export default {
         if (this.other)
           types.push("other")
 
-          console.log(types.length)
         if (types.length == 0) {
-          console.log(storedSearchResults)
           this.searchResults = storedSearchResults;
         } else {
           storedSearchResults = storedSearchResults.filter(item => types.includes(item.type));

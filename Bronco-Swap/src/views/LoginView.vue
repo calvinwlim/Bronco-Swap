@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     signInWithGoogle() {
-      console.log('method')
       let router = useRouter()
       const provider = new GoogleAuthProvider()
       signInWithPopup(getAuth(), provider)
