@@ -12,8 +12,10 @@
             <p class="userInfo">
               Posted by: {{ passProduct.displayName }} ({{ passProduct.email }})
             </p>
-
-            <button @click="close" type="button">Close</button>
+            <div class="button-group">
+              <button @click="close" type="button">Close</button>
+              <button v-if="passProduct.uid == userId" @click="deleteListing">Delete Listing</button>
+            </div>
           </div>
         </div>
       </transition>
@@ -21,20 +23,53 @@
   </transition>
 </template>
   
-  <script>
+<script>
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import { getFirestore, deleteDoc, doc } from 'firebase/firestore'
+import { getStorage, ref, deleteObject } from 'firebase/storage';
+const userID = JSON.parse(localStorage.getItem('user')).uid;
+
 export default {
   props: ['modalActive', 'passProduct'],
   setup(props, { emit }) {
     const close = () => {
+      const imageUrl = props.passProduct.image;
+      const regex = /images%2F(.*?)\?alt/;
+      const urlPath = regex.exec(imageUrl);
+      console.log(urlPath)
       emit('close')
     }
 
-    return { close }
-  }
+    const deleteListing = async () => {
+      const imageUrl = props.passProduct.image;
+      const regex = /images%2F(.*?)\?alt/;
+      const urlPath = regex.exec(imageUrl)[1];
+
+      try {
+        const storage = getStorage();
+        const db = getFirestore();
+        const listingRef = doc(db, 'Listings', props.passProduct.key);
+
+        await deleteDoc(listingRef);
+        console.log('Document successfully deleted!');
+
+        // Reference to the image in Firebase Storage
+        const imageRef = ref(storage, 'images/' + urlPath);
+
+        // Delete the image from Firebase Storage
+        await deleteObject(imageRef);
+      } catch (error) {
+        console.error('Error removing document: ', error);
+      }
+      emit('close');
+    };
+
+    return { close, deleteListing }
+  },
 }
 </script>
   
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .modal-animation-enter-active,
 .modal-animation-leave-active {
   transition: opacity 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
@@ -123,6 +158,13 @@ export default {
     button:active {
       background-color: #811e2d;
     }
+
   }
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 </style>

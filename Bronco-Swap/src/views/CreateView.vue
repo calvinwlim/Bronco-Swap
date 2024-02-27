@@ -143,6 +143,7 @@ export default {
           fileInput.value = ''
         }
         alert('Listing Posted!')
+        //TODO: not working??
         router.push('/profile')
       })
     },
@@ -153,7 +154,7 @@ export default {
 
     async previewImage() {
       const imageData = this.imageEvent.target.files[0]
-      const imageName = imageData.name
+      const imageName = imageData.name.replace(/ /g, '-');
       const storageRef = ref(storage, 'images/' + imageName)
       const uploadTask = uploadBytesResumable(storageRef, imageData)
       const snapshot = await uploadTask

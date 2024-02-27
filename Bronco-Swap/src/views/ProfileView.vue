@@ -285,6 +285,7 @@ header {
   margin: 0 -15px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .galleryitems .item {
   flex-basis: 20%;

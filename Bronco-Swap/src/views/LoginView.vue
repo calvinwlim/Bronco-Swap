@@ -29,6 +29,12 @@ export default {
       user: null
     }
   },
+  created() {
+    if (JSON.parse(localStorage.getItem('user'))) {
+      console.log('hit')
+      this.$router.push('/');
+    }
+  },
   methods: {
     signInWithGoogle() {
       let router = useRouter()
@@ -63,7 +69,7 @@ const signInWithGoogle = () => {
 }
 </script>
 
-<style lang="scss">
+<style scoped>
 .sign-in {
   display: flex;
   position: relative;
@@ -122,4 +128,21 @@ const signInWithGoogle = () => {
     vertical-align: middle;
   }
 }
+
+@media (max-width: 790px) {
+    .sign-in {
+      width: 100vw;
+    }
+
+    .pop-up {
+      width: 100vw;
+      padding: 0;
+      border: none;
+    }
+
+    .header {
+      width: 90%;
+      text-align: center;
+    }
+  }
 </style>
