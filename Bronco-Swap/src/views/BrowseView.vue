@@ -88,7 +88,6 @@ export default {
     toggleModal(item) {
       if (item) {
         this.passProduct = item;
-        console.log("uid: ", this.passProduct.uid)
       }
       this.modalActive = !this.modalActive;
     },

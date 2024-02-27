@@ -5,7 +5,11 @@
         <div v-show="modalActive" class="modal-inner">
           <i @click="close" class="far fa-times-circle"></i>
           <div class="modalInfo">
-            <img :src="passProduct.image" alt="This should be a photo" />
+            <img
+              :src="passProduct.image"
+              alt="This should be a photo"
+              @load="imageLoaded"
+            />
             <h1 class="itemTitle">{{ passProduct.title }}</h1>
             <p class="itemDesc">{{ passProduct.description }}</p>
             <p class="itemPrice">${{ passProduct.price }}</p>
@@ -14,7 +18,7 @@
             </p>
             <div class="button-group">
               <button @click="close" type="button">Close</button>
-              <button v-if="passProduct.uid == userId" @click="deleteListing">Delete Listing</button>
+              <button v-if="(passProduct.uid) == userID" @click="deleteListing">Delete Listing</button>
             </div>
           </div>
         </div>
@@ -32,11 +36,12 @@ const userID = JSON.parse(localStorage.getItem('user')).uid;
 export default {
   props: ['modalActive', 'passProduct'],
   setup(props, { emit }) {
+    const loading = ref(true);
+
     const close = () => {
       const imageUrl = props.passProduct.image;
       const regex = /images%2F(.*?)\?alt/;
       const urlPath = regex.exec(imageUrl);
-      console.log(urlPath)
       emit('close')
     }
 

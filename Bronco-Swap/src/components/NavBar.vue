@@ -3,7 +3,7 @@
     <div class="links">
       <RouterLink class="link" to="/">Home</RouterLink>
       <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/create'">Create a Listing</RouterLink>
-      <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>
+      <!--<<RouterLink class="link" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>-->
       <RouterLink class="link" to="/browse" @click="browseTab">Browse</RouterLink>
     </div>
     <div class="search-container">
@@ -15,10 +15,10 @@
       <img class="hamburger" v-if="!isMobileMenuVisible" src='../assets/mobile-menu-icon.png' @click="toggleMobileMenu" />
       <img class="hamburger" v-if="isMobileMenuVisible" src='../assets/x-icon.png' @click="toggleMobileMenu" />
       <div class="mobile-menu-content" v-show="isMobileMenuVisible">
-        <RouterLink class="link drop" to="/">Home</RouterLink>
-        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/create'">Create a Listing</RouterLink>
-        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>
-        <RouterLink class="link drop" to="/browse" @click="browseTab">Browse</RouterLink>
+        <RouterLink class="link drop" to="/" @click="isMobileMenuVisible = false">Home</RouterLink>
+        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/create'" @click="isMobileMenuVisible = false">Create a Listing</RouterLink>
+        <!--<RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>-->
+        <RouterLink class="link drop" to="/browse" @click="browseTab" >Browse</RouterLink>
       </div>
       <img class="mobile-search" src="../assets/search-icon.png" @click="router.push('/search')"/>
     </div>
@@ -87,7 +87,7 @@ let searchProducts = async () => {
         searchResults.push(doc.data());
     });
     if (searchResults.length > 0) {
-      localStorage.setItem('searchResults', JSON.stringify(searchResults)) // Store search results in local storage
+      localStorage.setItem('searchResults', JSON.stringify(searchResults))
       // Redirect to /browse and pass searchResults as a route parameter
       await router.push('/browse')
       window.location.reload()
@@ -108,6 +108,7 @@ const handleSignOut = () => {
 }
 
 const browseTab = async () => {
+  isMobileMenuVisible = false;
   localStorage.setItem('lastSearch', "");
   let uid = JSON.parse(localStorage.getItem("user")).uid;
   if (!uid) {
@@ -187,8 +188,8 @@ const browseTab = async () => {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  top: calc(100% - 5px); // Adjust the top position
-  right: 0; // Align with the right edge of the parent
+  top: calc(100% - 5px);
+  right: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -257,6 +258,11 @@ const browseTab = async () => {
 }
 
 @media (max-width: 790px) {
+
+  .theNavbar {
+    padding-left: 2px;
+    padding-right: 15px;
+  }
 
   .links,
   .search-container {
