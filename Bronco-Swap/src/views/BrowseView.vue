@@ -5,6 +5,7 @@
     </div>
   </Modal>
   <div class="content">
+
     <div class="sidebar">
       <h1 class="searchHeader">Filter by Category:</h1>
       <label class="checkbox">
@@ -23,8 +24,10 @@
         <input type="checkbox" v-model="other" @input="updateItems()"> Other
       </label>
     </div>
+
     <div class="browse">
-      <h1 class="searchHeader" v-if="searchResults && searchTerm.length > 0">Search Results for "{{ this.searchTerm }}"</h1>
+      <h1 class="searchHeader" v-if="searchResults && searchTerm.length > 0">Search Results for "{{ this.searchTerm }}"
+      </h1>
       <div v-if="searchResults" class="galleryitems">
 
         <div v-for="item in searchResults" class="item">
@@ -48,6 +51,7 @@
 </template>
 
 <script>
+import { setDefaultEventParameters } from 'firebase/analytics';
 import Modal from '../components/ModalPopUp.vue';
 
 export default {
@@ -87,6 +91,7 @@ export default {
       }
       this.modalActive = !this.modalActive;
     },
+
     updateItems(type, bool) {
       let storedSearchResults = JSON.parse(localStorage.getItem('searchResults')) || [];
       let types = []
@@ -107,7 +112,7 @@ export default {
           this.searchResults = storedSearchResults;
         }
       });
-    }
+    },
   }
 }
 </script>
@@ -127,8 +132,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 20%;
-  height: 100%;
-  min-height: 89.7vh;
+  height: 100vh;
   border-right: 1px solid #ddd;
 }
 
@@ -140,6 +144,7 @@ export default {
   margin: 30px 30px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .galleryitems .item {
@@ -234,5 +239,35 @@ export default {
   text-align: center;
   font-size: 28px;
   margin: 30px 0;
+}
+
+@media (max-width: 790px) {
+  .content {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .browse {
+    width: 100vw;
+  }
+
+  .sidebar {
+    width: 100vw;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 3.5rem;
+    border-bottom: 1px solid #ddd;
+    border-right: none;
+  }
+
+  .searchHeader {
+    font-size: 17px;
+    margin-top: 12px;
+  }
+
+  .checkbox {
+    padding: 0 1rem;
+  }
 }
 </style>

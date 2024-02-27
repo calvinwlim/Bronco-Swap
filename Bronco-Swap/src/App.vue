@@ -22,6 +22,7 @@ import NavBar from './components/NavBar.vue'
 .background {
   background-color: #f8f3ec;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .navbar {

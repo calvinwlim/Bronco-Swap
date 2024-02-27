@@ -119,6 +119,10 @@ export default {
       color: #F8f4f9;
       cursor: pointer;
     }
+
+    button:active {
+      background-color: #811e2d;
+    }
   }
 }
 </style>

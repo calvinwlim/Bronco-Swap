@@ -126,11 +126,9 @@ const browseTab = async () => {
 
 <style lang="scss" scoped>
 .theNavbar {
-  position: relative;
   z-index: 998;
   width: 100%;
-  margin: auto;
-  padding: 15px 35px 35px 0;
+  padding: 0 35px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -314,5 +312,6 @@ const browseTab = async () => {
   .mobile-search:hover {
     cursor: pointer;
   }
+
 }
 </style>
