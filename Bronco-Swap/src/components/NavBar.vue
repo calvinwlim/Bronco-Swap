@@ -51,7 +51,7 @@ const q = query(listingsCollection)
 const searchInput = ref('')
 const isLoggedIn = ref(false)
 const isDropdownVisible = ref(false)
-const isMobileMenuVisible = ref(false)
+let isMobileMenuVisible = ref(false)
 let userPhoto = '../assets/pfp4.png'
 
 const toggleDropdown = () => {
