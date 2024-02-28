@@ -9,24 +9,24 @@
     <div class="sidebar">
       <h1 class="searchHeader">Filter by Category:</h1>
       <label class="checkbox">
-        <input id="textbooks" type="checkbox" v-model="textbook" @input="updateItems()"> Textbooks
+        <input type="checkbox" v-model="textbook" @input="updateItems()"> Textbooks
       </label>
 
       <label class="checkbox">
-        <input id="clothes" type="checkbox" v-model="clothing" @input="updateItems()"> Clothing
+        <input type="checkbox" v-model="clothing" @input="updateItems()"> Clothing
       </label>
 
       <label class="checkbox">
-        <input id="furniture" type="checkbox" v-model="furniture" @input="updateItems()"> Furniture
+        <input type="checkbox" v-model="furniture" @input="updateItems()"> Furniture
       </label>
 
       <label class="checkbox">
-        <input id="other" type="checkbox" v-model="other" @input="updateItems()"> Other
+        <input type="checkbox" v-model="other" @input="updateItems()"> Other
       </label>
     </div>
 
     <div class="browse">
-      <h1 class="searchHeader" v-if="searchResults && searchTerm != ''">Search Results for "{{ this.searchTerm }}"
+      <h1 class="searchHeader" v-if="searchResults && searchTerm.length > 0">Search Results for "{{ this.searchTerm }}"
       </h1>
       <div v-if="searchResults" class="galleryitems">
 
@@ -36,16 +36,11 @@
               <a @click="toggleModal(item)" class="zoomlink"><i class="fa-solid fa-plus"></i></a>
               <div class="text">
                 <h3>{{ item.title }}</h3>
-                <a href="#" class="livelink">${{ item.price }} <i class="fa-solid fa-angle-right"></i></a>
+                <a href="#" class="livelink">{{ item.price }} <i class="fa-solid fa-angle-right"></i></a>
               </div>
             </div>
-            <img
-              v-show="loadingMap.get(item.image)"
-              class="item-image"
-              :src="item.image"
-              alt=""
-              @load="handleImageLoad(item.image)"
-              />
+            <img class="item-image" :src="item.image" alt="" />
+
           </div>
         </div>
       </div>
@@ -56,19 +51,13 @@
 </template>
 
 <script>
+import { setDefaultEventParameters } from 'firebase/analytics';
 import Modal from '../components/ModalPopUp.vue';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
-
-const db = getFirestore()
-const listingsCollection = collection(db, 'Listings')
-const q = query(listingsCollection)
 
 export default {
-  
   components: {
     Modal,
   },
-
   data() {
     return {
       id: JSON.parse(localStorage.getItem('user')).uid,
@@ -87,31 +76,14 @@ export default {
       furniture: false,
       other: false,
       searchResults: JSON.parse(localStorage.getItem('searchResults')),
-      loadingMap: new Map(),
     };
   },
-
-  async created() {
-    this.searchTerm = localStorage.getItem("lastSearch");
-    await this.searchProducts(this.searchTerm);
-    if (this.searchResults)
-      this.searchResults.forEach((result) => {
-      this.loadingMap.set(result.image, true);
-      })
-  },
-
-  beforeUnmount() {
-    this.searchTerm = localStorage.setItem("lastSearch", "");
-    this.loadingMap.clear()
-  },
-
   watch: {
     textbook: 'updateItems',
     clothing: 'updateItems',
     furniture: 'updateItems',
     other: 'updateItems',
   },
-
   methods: {
     toggleModal(item) {
       if (item) {
@@ -140,28 +112,6 @@ export default {
           this.searchResults = storedSearchResults;
         }
       });
-    },
-
-    async searchProducts(term) {
-      const searchTerm = term;
-      let querySnapshot = await getDocs(query(listingsCollection));
-      const searchResults = [];
-      querySnapshot.forEach((doc) => {
-        const userid = JSON.parse(localStorage.getItem("user")).uid;
-        if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()) && doc.data().uid != userid)
-          searchResults.push(doc.data());
-      });
-      if (searchResults.length > 0) {
-        localStorage.setItem('searchResults', JSON.stringify(searchResults))
-        this.searchResults = searchResults;
-        // Redirect to /browse and pass searchResults as a route parameter
-      } else {
-        localStorage.setItem('searchResults', null)
-      }
-    },
-
-    handleImageLoad(image) {
-      this.loadingMap.set(image, true);
     },
   }
 }

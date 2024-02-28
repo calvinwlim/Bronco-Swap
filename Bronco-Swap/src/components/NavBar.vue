@@ -1,14 +1,13 @@
 <template>
   <div class="theNavbar">
     <div class="links">
-      <RouterLink class="link" to="/" @click="handlePageChange">Home</RouterLink>
-      <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/create'" @click="handlePageChange">Create a Listing
-      </RouterLink>
+      <RouterLink class="link" to="/">Home</RouterLink>
+      <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/create'">Create a Listing</RouterLink>
       <!--<<RouterLink class="link" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>-->
       <RouterLink class="link" to="/browse" @click="browseTab">Browse</RouterLink>
     </div>
     <div class="search-container">
-      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..." />
+      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..."/>
       <button class="search-button" @click="searchProducts">Search</button>
     </div>
 
@@ -16,13 +15,12 @@
       <img class="hamburger" v-if="!isMobileMenuVisible" src='../assets/mobile-menu-icon.png' @click="toggleMobileMenu" />
       <img class="hamburger" v-if="isMobileMenuVisible" src='../assets/x-icon.png' @click="toggleMobileMenu" />
       <div class="mobile-menu-content" v-show="isMobileMenuVisible">
-        <RouterLink class="link drop" to="/" @click="handlePageChange">Home</RouterLink>
-        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/create'" @click="handlePageChange">Create a Listing
-        </RouterLink>
+        <RouterLink class="link drop" to="/" @click="isMobileMenuVisible = false">Home</RouterLink>
+        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/create'" @click="isMobileMenuVisible = false">Create a Listing</RouterLink>
         <!--<RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>-->
-        <RouterLink class="link drop" to="/browse" @click="browseTab">Browse</RouterLink>
+        <RouterLink class="link drop" to="/browse" @click="browseTab" >Browse</RouterLink>
       </div>
-      <img class="mobile-search" src="../assets/search-icon.png" @click="router.push('/search')" />
+      <img class="mobile-search" src="../assets/search-icon.png" @click="router.push('/search')"/>
     </div>
 
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
@@ -53,7 +51,7 @@ const q = query(listingsCollection)
 const searchInput = ref('')
 const isLoggedIn = ref(false)
 const isDropdownVisible = ref(false)
-let isMobileMenuVisible = ref(false)
+const isMobileMenuVisible = ref(false)
 let userPhoto = '../assets/pfp4.png'
 
 const toggleDropdown = () => {
@@ -76,7 +74,7 @@ onMounted(() => {
   })
 })
 
-const searchProducts = async () => {
+let searchProducts = async () => {
   const searchTerm = searchInput.value.trim()
   if (searchTerm !== '') {
     localStorage.setItem('lastSearch', searchTerm);
@@ -99,11 +97,6 @@ const searchProducts = async () => {
       window.location.reload()
     }
   }
-}
-
-const handlePageChange = () => {
-  isMobileMenuVisible = false;
-  localStorage.setItem('lastSearch', '');
 }
 
 const handleSignOut = () => {
@@ -298,7 +291,7 @@ const browseTab = async () => {
   }
 
   .drop {
-    display: flex;
+    display: flex; 
     align-items: center;
     justify-content: space-evenly;
     text-align: center;
