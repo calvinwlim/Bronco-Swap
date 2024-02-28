@@ -90,8 +90,9 @@
 
 <script>
 import router from '@/router'
-import { addDoc, collection, query, getFirestore } from 'firebase/firestore'
-import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { addDoc, collection, query, getFirestore } from 'firebase/firestore';
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { Timestamp } from 'firebase/firestore';
 
 const storage = getStorage()
 const db = getFirestore()
@@ -108,7 +109,8 @@ export default {
         uid: JSON.parse(localStorage.getItem('user')).uid,
         displayName: JSON.parse(localStorage.getItem('user')).displayName,
         type: "",
-        email: JSON.parse(localStorage.getItem('user')).email
+        email: JSON.parse(localStorage.getItem('user')).email,
+        created: null
       },
       userTitle: '',
       selectedCategory: '',
@@ -125,6 +127,7 @@ export default {
       this.product.description = this.userDesc;
       this.product.price = this.userPrice;
       this.product.type = this.userType;
+      this.product.created = Timestamp.fromDate(new Date());
       await this.previewImage();
       addDoc(
         q,
@@ -144,7 +147,7 @@ export default {
         }
         alert('Listing Posted!')
         //TODO: not working??
-        router.push('/profile')
+        this.$router.push('/profile')
       })
     },
 
