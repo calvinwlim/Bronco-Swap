@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import { setDefaultEventParameters } from 'firebase/analytics';
 import Modal from '../components/ModalPopUp.vue';
 
 export default {
@@ -68,6 +67,7 @@ export default {
         description: "Description",
         price: "price",
         image: "url",
+        uid: ""
       },
       modalActive: false,
       searchTerm: localStorage.getItem("lastSearch"),
@@ -78,6 +78,18 @@ export default {
       searchResults: JSON.parse(localStorage.getItem('searchResults')),
     };
   },
+
+  created() {
+    if (!JSON.parse(localStorage.getItem('user')).uid) {
+      this.$router.push('/')
+    }
+  },
+
+  beforeUnmount() {
+    localStorage.setItem('searchResults', localStorage.getItem('allResults'))
+    localStorage.setItem('lastSearch', '');
+  },
+
   watch: {
     textbook: 'updateItems',
     clothing: 'updateItems',
@@ -268,6 +280,13 @@ export default {
 
   .checkbox {
     padding: 0 1rem;
+  }
+
+  .checkbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

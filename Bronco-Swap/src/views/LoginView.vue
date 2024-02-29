@@ -30,8 +30,7 @@ export default {
     }
   },
   created() {
-    if (JSON.parse(localStorage.getItem('user'))) {
-      console.log('hit')
+    if (JSON.parse(localStorage.getItem('user')).uid) {
       this.$router.push('/');
     }
   },
@@ -52,9 +51,6 @@ export default {
     }
   }
 }
-
-// const email = ref("");
-// const password = ref("");
 
 let user = null
 const signInWithGoogle = () => {

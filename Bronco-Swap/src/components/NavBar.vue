@@ -4,10 +4,10 @@
       <RouterLink class="link" to="/">Home</RouterLink>
       <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/create'">Create a Listing</RouterLink>
       <!--<<RouterLink class="link" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>-->
-      <RouterLink class="link" to="/browse" @click="browseTab">Browse</RouterLink>
+      <RouterLink class="link" :to="!isLoggedIn ? '/login' : '/browse'" @click="browseTab">Browse</RouterLink>
     </div>
     <div class="search-container">
-      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..."/>
+      <input class="search-input" type="text" v-model="searchInput" placeholder="Search for items..." />
       <button class="search-button" @click="searchProducts">Search</button>
     </div>
 
@@ -16,11 +16,12 @@
       <img class="hamburger" v-if="isMobileMenuVisible" src='../assets/x-icon.png' @click="toggleMobileMenu" />
       <div class="mobile-menu-content" v-show="isMobileMenuVisible">
         <RouterLink class="link drop" to="/" @click="isMobileMenuVisible = false">Home</RouterLink>
-        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/create'" @click="isMobileMenuVisible = false">Create a Listing</RouterLink>
+        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/create'" @click="isMobileMenuVisible = false">Create
+          a Listing</RouterLink>
         <!--<RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/chat'">Chat</RouterLink>-->
-        <RouterLink class="link drop" to="/browse" @click="browseTab" >Browse</RouterLink>
+        <RouterLink class="link drop" :to="!isLoggedIn ? '/login' : '/browse'" @click="browseTab">Browse</RouterLink>
       </div>
-      <img class="mobile-search" src="../assets/search-icon.png" @click="router.push('/search')"/>
+      <img class="mobile-search" src="../assets/search-icon.png" @click="router.push('/search')" />
     </div>
 
     <RouterLink class="link" to="/login" v-if="!isLoggedIn">Login</RouterLink>
@@ -40,7 +41,7 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
 import router from '../router'
@@ -51,7 +52,7 @@ const q = query(listingsCollection)
 const searchInput = ref('')
 const isLoggedIn = ref(false)
 const isDropdownVisible = ref(false)
-let isMobileMenuVisible = ref(false)
+const isMobileMenuVisible = ref(false)
 let userPhoto = '../assets/pfp4.png'
 
 const toggleDropdown = () => {
@@ -63,44 +64,68 @@ const toggleMobileMenu = () => {
 }
 
 let auth
-onMounted(() => {
+onMounted(async () => {
   auth = getAuth()
   onAuthStateChanged(auth, (user) => {
     if (user) {
       isLoggedIn.value = true
       userPhoto = user.photoURL
     }
-    else isLoggedIn.value = false
+    else {
+      isLoggedIn.value = false
+      localStorage.setItem('user', JSON.stringify({
+        uid: null
+      }))
+    }
   })
 })
 
-let searchProducts = async () => {
-  const searchTerm = searchInput.value.trim()
-  if (searchTerm !== '') {
-    localStorage.setItem('lastSearch', searchTerm);
-    const searchResults = [];
-    let querySnapshot = await getDocs(query(listingsCollection));
-    querySnapshot.forEach((doc) => {
+watch(isLoggedIn, async (newValue) => {
+  if (newValue) {
+    const uid = JSON.parse(localStorage.getItem("user")).uid;
+    const allResults = [];
 
-      const userid = JSON.parse(localStorage.getItem("user")).uid;
-      if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()) && doc.data().uid != userid)
-        searchResults.push(doc.data());
+    const querySnapshot = await getDocs(query(listingsCollection, where('uid', '!=', uid)));
+    querySnapshot.forEach((doc) => {
+      allResults.push(doc.data());
     });
-    if (searchResults.length > 0) {
-      localStorage.setItem('searchResults', JSON.stringify(searchResults))
-      // Redirect to /browse and pass searchResults as a route parameter
-      await router.push('/browse')
-      window.location.reload()
-    } else {
-      localStorage.setItem('searchResults', null)
-      await router.push('/browse')
-      window.location.reload()
+    localStorage.setItem('allResults', JSON.stringify(allResults));
+  } else {
+
+  }
+})
+
+let searchProducts = async () => {
+  if (isLoggedIn) {
+    const searchTerm = searchInput.value.trim()
+    if (searchTerm !== '') {
+      localStorage.setItem('lastSearch', searchTerm);
+      const searchResults = [];
+      let querySnapshot = await getDocs(query(listingsCollection));
+      querySnapshot.forEach((doc) => {
+
+        const userid = JSON.parse(localStorage.getItem("user")).uid;
+        if (doc.data().title.toLowerCase().includes(searchTerm.toLowerCase()) && doc.data().uid != userid)
+          searchResults.push(doc.data());
+      });
+      if (searchResults.length > 0) {
+        localStorage.setItem('searchResults', JSON.stringify(searchResults))
+        // Redirect to /browse and pass searchResults as a route parameter
+        await router.push('/browse')
+        window.location.reload()
+      } else {
+        localStorage.setItem('searchResults', null)
+        await router.push('/browse')
+        window.location.reload()
+      }
     }
   }
 }
 
 const handleSignOut = () => {
-  localStorage.setItem('user', null)
+  localStorage.setItem('user', JSON.stringify({
+    uid: null
+  }))
   signOut(auth).then(() => {
     router.push('/')
     window.location.reload()
@@ -108,19 +133,22 @@ const handleSignOut = () => {
 }
 
 const browseTab = async () => {
-  isMobileMenuVisible = false;
-  localStorage.setItem('lastSearch', "");
-  let uid = JSON.parse(localStorage.getItem("user")).uid;
-  if (!uid) {
-    uid = "@#$%";
+  if (isLoggedIn.value) {
+    isMobileMenuVisible.value = false;
+    localStorage.setItem('lastSearch', "");
+    let uid = "XYZ"
+    if (JSON.parse(localStorage.getItem("user"))) {
+      uid = JSON.parse(localStorage.getItem("user")).uid;
+    }
+
+    const searchResults = [];
+    const querySnapshot = await getDocs(query(listingsCollection, where('uid', '!=', uid)));
+    querySnapshot.forEach((doc) => {
+      searchResults.push(doc.data());
+    });
+    localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
+    await router.push('/browse');
   }
-  const searchResults = [];
-  const querySnapshot = await getDocs(query(listingsCollection, where('uid', '!=', uid)));
-  querySnapshot.forEach((doc) => {
-    searchResults.push(doc.data());
-  });
-  localStorage.setItem('searchResults', JSON.stringify(searchResults)); // Store search results in local storage
-  await router.push('/browse');
 };
 
 </script>
@@ -291,7 +319,7 @@ const browseTab = async () => {
   }
 
   .drop {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-evenly;
     text-align: center;

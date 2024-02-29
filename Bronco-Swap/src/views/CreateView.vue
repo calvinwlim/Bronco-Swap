@@ -89,7 +89,6 @@
 </template>
 
 <script>
-import router from '@/router'
 import { addDoc, collection, query, getFirestore } from 'firebase/firestore'
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 
@@ -144,7 +143,7 @@ export default {
         }
         alert('Listing Posted!')
         //TODO: not working??
-        router.push('/profile')
+        this.$router.push('/profile')
       })
     },
 

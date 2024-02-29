@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import router from '../router';
 
@@ -42,6 +42,12 @@ let searchProducts = async () => {
         }
     }
 }
+
+onMounted(() => {
+    if (!JSON.parse(localStorage.getItem('user')).uid) {
+        router.push('/login')
+    }
+});
 </script>
 
 <style>

@@ -18,7 +18,7 @@
             </p>
             <div class="button-group">
               <button @click="close" type="button">Close</button>
-              <button v-if="(passProduct.uid) == userID" @click="deleteListing">Delete Listing</button>
+              <button v-if="(passProduct.uid) == userID.value" @click="deleteListing">Delete Listing</button>
             </div>
           </div>
         </div>
@@ -28,15 +28,13 @@
 </template>
   
 <script>
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { getFirestore, deleteDoc, doc } from 'firebase/firestore'
 import { getStorage, ref, deleteObject } from 'firebase/storage';
-const userID = JSON.parse(localStorage.getItem('user')).uid;
 
 export default {
   props: ['modalActive', 'passProduct'],
-  setup(props, { emit }) {
-    const loading = ref(true);
+  setup(props, { emit }) { 
+    const userID = ref((localStorage.getItem('user')) ? "" : JSON.parse(localStorage.getItem('user')).uid);
 
     const close = () => {
       const imageUrl = props.passProduct.image;
@@ -69,7 +67,7 @@ export default {
       emit('close');
     };
 
-    return { close, deleteListing }
+    return { userID, close, deleteListing }
   },
 }
 </script>
