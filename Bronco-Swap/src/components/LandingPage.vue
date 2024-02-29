@@ -148,5 +148,10 @@ h1 {
     font-size: 3rem;
     padding-bottom: 2rem;
   }
-}</style>
+
+  .title {
+    font-size: 3rem;
+  }
+}
+</style>
 

@@ -5,11 +5,7 @@
         <div v-show="modalActive" class="modal-inner">
           <i @click="close" class="far fa-times-circle"></i>
           <div class="modalInfo">
-            <img
-              :src="passProduct.image"
-              alt="This should be a photo"
-              @load="imageLoaded"
-            />
+            <img :src="passProduct.image" alt="This should be a photo" @load="imageLoaded" />
             <h1 class="itemTitle">{{ passProduct.title }}</h1>
             <p class="itemDesc">{{ passProduct.description }}</p>
             <p class="itemPrice">${{ passProduct.price }}</p>
@@ -33,7 +29,7 @@ import { getStorage, ref, deleteObject } from 'firebase/storage';
 
 export default {
   props: ['modalActive', 'passProduct'],
-  setup(props, { emit }) { 
+  setup(props, { emit }) {
     const userID = ref((localStorage.getItem('user')) ? "" : JSON.parse(localStorage.getItem('user')).uid);
 
     const close = () => {
@@ -147,6 +143,16 @@ export default {
         font-size: 20px;
         color: #A5CC6b;
       }
+
+      @media (max-width: 790px) {
+        img {
+          max-width: 70%;
+        }
+
+        .itemTitle {
+          font-size: 1.3rem;
+        }
+      }
     }
 
     button {
@@ -156,6 +162,9 @@ export default {
       background-color: #862633;
       color: #F8f4f9;
       cursor: pointer;
+      @media (max-width: 790px) {
+        padding: 10px 15px;
+      }
     }
 
     button:active {
