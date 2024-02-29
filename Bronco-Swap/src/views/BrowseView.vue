@@ -266,7 +266,7 @@ export default {
   .sidebar {
     width: 100vw;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     height: 3.5rem;
     border-bottom: 1px solid #ddd;
@@ -274,15 +274,13 @@ export default {
   }
 
   .searchHeader {
-    font-size: 17px;
+    font-size: 14px;
     margin-top: 12px;
   }
 
   .checkbox {
-    padding: 0 1rem;
-  }
-
-  .checkbox {
+    font-size: 11px;
+    padding: 0 2%;
     display: flex;
     flex-direction: column;
     justify-content: center;
